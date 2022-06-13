@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Auth::routes();sad
 // Route::get('/home', 'HomeController@index')->name('home');
-Route::get();
+Auth::routes();
+Route::get('/', 'Web\HomeController@index')->name('home');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/dashboard', 'Web\DashboardController@index_dashboard');
+    Route::get('/dashboard/{id_kas}', 'Web\DashboardController@show_dashboard')->name('show_dashboard');
+});
