@@ -19,11 +19,11 @@
     <div class="main">
         <div class="col-md-8  ml-auto mr-auto">
             <div class=" login-form " style="padding-top: 30px !important;">
-                <form method="POST" action="{{ route('login') }}">
+                <form id="form-login">
                     @csrf
                     <div class="form-group">
                         <label>E-Mail</label>
-                        <input type="text" id="username" class="form-control" placeholder="User Name" name="email"
+                        <input type="text" id="email" class="form-control" placeholder="User Name" name="email"
                             value="{{ old('email') }}" required>
                     </div>
                     <div class="form-group">
@@ -39,7 +39,7 @@
                             </label>
                         </div>
                     </div>
-                    <button type="submit" onclick="login()" class="float-lg-right tombol btn">{{ __('Login') }}</button>
+                    <button type="button" class="float-lg-right tombol btn">{{ __('Login') }}</button>
                 </form>
 
             </div>
@@ -82,12 +82,13 @@
         </div>
     </div>
     <script>
-        function login() {
-
-            var username = document.getElementById("username").value;
+        $('.tombol').on('click', function() {
+            // console.log($(this).data('id'))
+            var email = document.getElementById("email").value;
             var password = document.getElementById("password").value;
-
-            if (username == '' || password == '') {
+            var token = $("meta[name='csrf-token']").attr("content");
+            let FormData = $('#form-login').serialize()
+            if (email == '' || password == '') {
                 Swal.fire({
                     title: '<strong>Login Failed</u></strong>',
                     icon: 'error',
@@ -96,18 +97,46 @@
                     confirmButtonText: ' Oke',
                 })
             } else {
-                Swal.fire({
-                    title: '<strong>Login Succes</strong>',
-                    icon: 'success',
-                    focusConfirm: false,
-                    showConfirmButton: false,
-                }).then(function() {
-                    // Redirect the user
-                    window.location.href = "dashboard";
-                    console.log('The Ok Button was clicked.');
+                // AJAX
+                $.ajax({
+                    url: '{{ route('login') }}',
+                    method: "POST",
+                    data: FormData,
+                    success: function(data) {
+                        if (data.success) {
+                            Swal.fire({
+                                    title: '<strong>Login Succes</strong>',
+                                    icon: 'success',
+                                    timer: 3000,
+                                    focusConfirm: false,
+                                    showConfirmButton: false,
+                                })
+                                .then(function() {
+                                    window.location.href = "{{ route('index_dashboard') }}";
+                                });
+
+                        } else {
+                            Swal.fire({
+                                title: '<strong>Login Failed</u></strong>',
+                                icon: 'error',
+                                showCloseButton: true,
+                                focusConfirm: false,
+                                confirmButtonText: ' Oke',
+                            })
+                        }
+                    },
+                    error: function(error) {
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Opps!',
+                            timer: 3000,
+                            showConfirmButton: false,
+                            text: 'Email Dan Password error, Tolong Check Kembali!'
+                        });
+                    }
                 })
             }
-        }
+        })
     </script>
 
 @endsection

@@ -23,15 +23,15 @@
                         <a class="nav-item  nav-link dropdown-toggle tombol bg-light text-dark btn-md tombol"
                             style="min-width: 150px !important; margin-right:5px ;" href="javascript:void(0)"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="css/src/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
-                                width="20" />
+                            <img src="frontend/css/src/assets/images/users/profile-pic.jpg" alt="user"
+                                class="rounded-circle" width="20" />
                             <span class="text-dark">Hello,</span>
                             <span class="text-dark">{{ Auth::user()->name }}</span>
                             <!-- <i data-feather="chevron-down" class="svg-icon"></i> -->
                         </a>
                         <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                    document.getElementById('logout-form').submit();"><i
+                                                        document.getElementById('logout-form').submit();"><i
                                     data-feather="power" class="svg-icon mr-2 ml-1"></i>{{ __('Logout') }}</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
