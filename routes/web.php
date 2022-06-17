@@ -32,11 +32,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/form-book', 'Web\FormBukuController@save_BukuKas')->name('save_BukuKas');
     /* BOOK FORM END */
     Route::get('/book', 'Web\BukuKasController@index_BukuKas')->name('index_BukuKas');
-    Route::get('/book/{id_catatan}', 'Web\BukuKasController@show_BukuKas')->name('show_BukuKas');
-    Route::post('/book/{id_catatan}/save', 'Web\BukuKasController@save')->name('save_BukuKas');
-    Route::get('/book/{id_catatan}/editPemasukan', 'Web\BukuKasController@editpemasukan')->name('editpemasukan_BukuKas');
-    Route::get('/book/{id_catatan}/editPengeluaran', 'Web\BukuKasController@editpengeluaran')->name('editpengeluaran_BukuKas');
-    Route::post('/book/{id_catatan}/update', 'Web\BukuKasController@update_BukuKas')->name('update_BukuKas');
+    Route::get('/book/{id_kas}', 'Web\BukuKasController@show_BukuKas')->name('show_BukuKas');
+    Route::post('/book/{id_kas}/save', 'Web\BukuKasController@save_Noted_BukuKas')->name('save_Noted_BukuKas');
+    Route::get('/book/{id_catatan}/notes', 'Web\BukuKasController@notes_book')->name('noted_book');
+    Route::patch('/book/{id_catatan}/update', 'Web\BukuKasController@update_BukuKas')->name('update_BukuKas');
     Route::get('/book/{id_catatan}/delete', 'Web\BukuKasController@delete_BukuKas')->name('delete_BukuKas');
     /* CASH BOOK ALAN END */
 

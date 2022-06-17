@@ -53,25 +53,21 @@ class DashboardController extends Controller
             $count_up = ($all_persen_book_last - $all_persen_book_first) / ($all_persen_book_first);
             $count_down = ($all_persen_book_first - $all_persen_book_last) / ($all_persen_book_first);
         }
-        $data_result_up = number_format($count_up, 2);
-        $data_result_down = number_format($count_down, 2);
+        $data_result_up = number_format($count_up, 2) * 100;
+        $data_result_down = number_format($count_down, 2) * 100;
         if ($all_persen_book_first == $all_persen_book_last) {
             # code...
             $data = ' ' . $data_result_up;
             $data = ' ' . $data_result_down;
             $data_persen = ' ' . $data_result_up;
             $data_persen = ' ' . $data_result_down;
-        } elseif ($all_persen_book_first >= $all_persen_book_last) {
+        } elseif ($all_persen_book_last >= $all_persen_book_first) {
             # code...
             $data = 'Naik ' . $data_result_up;
-            $data = 'Turun ' . $data_result_down;
             $data_persen = '+ ' . $data_result_up;
-            $data_persen = '' . $data_result_down;
-        } else {
-            $data = 'Naik' . $data_result_up;
+        } elseif ($all_persen_book_first >= $all_persen_book_last) {
             $data = 'Turun ' . $data_result_down;
-            $data_persen = '+ ' . $data_result_up;
-            $data_persen = ' ' . $data_result_down;
+            $data_persen = '- ' . $data_result_down;
         }
 
         /* DATA PERSEN END */
@@ -87,40 +83,85 @@ class DashboardController extends Controller
             $count_up_income = ($all_income_last - $all_income_book_first) / ($all_income_book_first);
             $count_down_income = ($all_income_book_first - $all_income_last) / ($all_income_book_first);
         }
-        $data_resultIncome_up = number_format($count_up_income, 2);
-        $data_resultIncome_down = number_format($count_down_income, 2);
+        $data_resultIncome_up = number_format($count_up_income, 2) * 100;
+        $data_resultIncome_down = number_format($count_down_income, 2) * 100;
         if ($all_income_book_first == $all_income_last) {
             # code...
             $data_income = ' ' . $data_resultIncome_up;
             $data_income = ' ' . $data_resultIncome_down;
             $data_persen_income = ' ' . $data_resultIncome_up;
             $data_persen_income = ' ' . $data_resultIncome_down;
-        } elseif ($all_income_book_first >= $all_income_last) {
+        } elseif ($all_income_last >= $all_income_book_first) {
             # code...
             $data_income = 'Naik ' . $data_resultIncome_up;
-            $data_income = 'Turun ' . $data_resultIncome_down;
             $data_persen_income = '+ ' . $data_resultIncome_up;
-            $data_persen_income = '' . $data_resultIncome_down;
-        } else {
-            $data_income = 'Naik' . $data_resultIncome_up;
+        } elseif ($all_income_book_first >= $all_income_last) {
+            # code...
             $data_income = 'Turun ' . $data_resultIncome_down;
-            $data_persen_income = '+ ' . $data_resultIncome_up;
-            $data_persen_income = ' ' . $data_resultIncome_down;
+            $data_persen_income = '- ' . $data_resultIncome_down;
         }
         /* DATA INCOME END */
         /* DATA EXPENDITURE */
+        $all_expenditure_book_first = DB::table('tbl_buku_kas')->where('id_users', '=', $this->auth())->sum('saldo_buku_akhir');
+        $all_expenditure_last = DB::table('tbl_catatan_buku')->where('id_users', '=', $this->auth())->where('catatan_keterangan', '=', 'pengeluaran')->sum('catatan_saldo_kas');
+        if ($all_expenditure_book_first == 0 && $all_expenditure_last == 0) {
+            # code...
+            $count_up_expenditure = 0;
+            $count_down_expenditure = 0;
+        } else {
+            # code...
+            $count_up_expenditure = ($all_expenditure_last - $all_expenditure_book_first) / ($all_expenditure_book_first);
+            $count_down_expenditure = ($all_expenditure_book_first - $all_expenditure_last) / ($all_expenditure_book_first);
+        }
+        $data_resultExpenditure_up = number_format($count_up_expenditure, 2) * 100;
+        $data_resultExpenditure_down = number_format($count_down_expenditure, 2) * 100;
+
+        if ($all_expenditure_book_first == $all_expenditure_last) {
+            # code...
+            $data_expenditure = ' ' . $data_resultExpenditure_up;
+            $data_expenditure = ' ' . $data_resultExpenditure_down;
+            $data_persen_expenditure = ' ' . $data_resultExpenditure_up;
+            $data_persen_expenditure = ' ' . $data_resultExpenditure_down;
+        } elseif ($all_expenditure_book_first >= $all_expenditure_last) {
+            # code...
+            $data_expenditure = 'Turun ' . $data_resultExpenditure_down;
+            $data_persen_expenditure = '- ' . $data_resultExpenditure_down;
+        } elseif ($all_expenditure_last >= $all_expenditure_book_first) {
+            # code...
+            $data_expenditure = 'Naik ' . $data_resultExpenditure_up;
+            $data_persen_expenditure = '+ ' . $data_resultExpenditure_up;
+        }
         /* DATA EXPENDITURE END */
-        /* GRAFIK BULANAN */
-        /* GRAFIK BULANAN */
+        /* MONTHLY CHART */
+        $data_bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        for ($bulan = 1; $bulan < 13; $bulan++) {
+            # code...
+            $month = '2020-' . $bulan . '-20';
+            $date = date('m', strtotime($month));
+            $catatan_jumlah = DB::table('tbl_catatan_buku')->where('id_users', '=', $this->auth())->where('catatan_keterangan', '=', 'pengeluaran')->whereMonth('created_at', '=', $date)->sum('catatan_saldo_kas');
+            $jumlah_catatan[] = $catatan_jumlah;
+
+            $catatan_jumlah2 = DB::table('tbl_catatan_buku')->where('id_users', '=', $this->auth())->where('catatan_keterangan', '=', 'pemasukan')->whereMonth('created_at', '=', $date)->sum('catatan_saldo_kas');
+            $jumlah_catatan2[] = $catatan_jumlah2;
+        }
+        $bulangrafik = json_encode($data_bulan);
+        $pemasukangrafik = json_encode($jumlah_catatan);
+        $pengeluarangrafik = json_encode($jumlah_catatan2);
+        /* MONTHLY CHART END */
         return view('Web.Dashboard.dashboard', compact(
             'all_cash_book',
             'total_all_balance',
             'total_all_income',
             'total_all_expenses',
             'data',
-            'data_persen',
             'data_income',
-            'data_persen_income'
+            'data_persen_income',
+            'data_persen',
+            'data_expenditure',
+            'data_persen_expenditure',
+            'bulangrafik',
+            'pemasukangrafik',
+            'pengeluarangrafik'
         ));
     }
     public function show_dashboard($id_kas)

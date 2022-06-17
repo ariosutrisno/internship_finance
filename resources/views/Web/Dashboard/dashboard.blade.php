@@ -101,13 +101,13 @@
                                             {{-- <sup class="set-doller"></sup> --}}
                                             @currency($total_all_expenses)
                                         </h2>
-                                        {{-- <span
+                                        <span
                                             class="badge bg-danger font-12 text-white font-weight-medium badge-pill ml-2 d-md-none d-lg-block"
-                                            style="margin-top:40px !important">{{ $pengeluaran_persen }}%</span> --}}
+                                            style="margin-top:40px !important">{{ $data_persen_expenditure }}%</span>
                                     </div>
-                                    {{-- <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
-                                        {{ $pengeluaran_ket }} % dari bulan lalu
-                                    </h6> --}}
+                                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
+                                        {{ $data_expenditure }} % dari bulan lalu
+                                    </h6>
                                 </div>
 
                             </div>
@@ -140,11 +140,11 @@
                                     Income Records
                                 </h3>
                             </div>
-                                <li style="list-style-type: none;">
-                                    
-                                    
-                                </li>
-                            
+                            <li style="list-style-type: none;">
+
+
+                            </li>
+
                         </div>
                     </div>
                     <div class="card border-right mr-2 ml-2">
@@ -154,12 +154,12 @@
                                     Outcome Records
                                 </h3>
                             </div>
-                        
-                                <li style="list-style-type: none;">
-                            
-                                    
-                                </li>
-                        
+
+                            <li style="list-style-type: none;">
+
+
+                            </li>
+
                         </div>
                     </div>
 
@@ -171,7 +171,7 @@
                                 </h3>
 
                             </div>
-                            
+
                         </div>
                     </div>
 
@@ -186,14 +186,16 @@
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-
+                labels: <?= $bulangrafik ?>,
                 datasets: [{
                         label: 'Pemasukan',
+                        data: <?= $pemasukangrafik ?>,
                         backgroundColor: 'rgba(0, 0, 0, 0)',
                         borderColor: 'rgba(0, 0, 255)',
                     },
                     {
                         label: 'pengeluaran',
+                        data: <?= $pengeluarangrafik ?>,
                         backgroundColor: 'rgba(0, 0, 0, 0)',
                         borderColor: 'rgba(155, 0, 0, 1)',
                     }

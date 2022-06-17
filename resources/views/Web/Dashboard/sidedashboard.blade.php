@@ -168,13 +168,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="sidebar-item ">
-                            <a href="{{ route('create_BukuKas') }}" class="sidebar-link"><span
-                                    class="hide-menu">
-                                    Tambah Buku Kas
-                                </span>
-                            </a>
-                        </li>
+
                         {{-- <li class="sidebar-item ">
                             <a href="{{ route('kategori') }}" class="sidebar-link"><span class="hide-menu">
                                     Kategori
