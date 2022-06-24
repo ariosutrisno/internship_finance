@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class BukuKasController extends Controller
 {
@@ -31,12 +32,11 @@ class BukuKasController extends Controller
             ->paginate(10);
         $kategori = DB::table('tbl_kategori')->get();
         /* FILTER DATE */
-
         return view('Web.Buku-Kas.view-buku-kas', compact(
             'cash_book_id',
             'noted_cash_book_id',
             'kategori',
-            'cash_book_id_total'
+            'cash_book_id_total',
         ));
     }
     public function save_Noted_BukuKas(Request $request, $id_kas)
@@ -161,5 +161,16 @@ class BukuKasController extends Controller
         }
 
         return redirect()->back();
+    }
+    public function filterdate(Request $request, $id_kas)
+    {
+        // $from = $request->startDate;
+        // $noted_cash_book_id = DB::table('tbl_catatan_buku')->where('id_users', '=', $this->auth())->where('id_buku_kas', '=', $id_kas)
+        //     ->whereDate('tbl_catatan_buku.created_at', '=', Carbon::parse($request->startDate)->locale('id')->isoformat('DD MMMM Y'))
+        //     ->join('tbl_kategori', 'tbl_catatan_buku.id_kategori', '=', 'tbl_kategori.id_kategori')
+        //     ->select('tbl_kategori.*', 'tbl_catatan_buku.*')
+        //     ->orderByDesc('tbl_catatan_buku.created_at')
+        //     ->paginate(10);
+        // return view('Web.Buku-Kas.view-buku-kas', compact('noted_cas_book_id', 'datefrom'));
     }
 }

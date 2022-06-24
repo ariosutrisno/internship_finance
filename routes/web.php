@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
     /* BOOK FORM END */
     Route::get('/book', 'Web\BukuKasController@index_BukuKas')->name('index_BukuKas');
     Route::get('/book/{id_kas}', 'Web\BukuKasController@show_BukuKas')->name('show_BukuKas');
+    Route::get('/book/{id_kas}/date', 'Web\BukuKasController@filterdate')->name('show_BukuKas_date');
     Route::post('/book/{id_kas}/save', 'Web\BukuKasController@save_Noted_BukuKas')->name('save_Noted_BukuKas');
     Route::get('/book/{id_catatan}/notes', 'Web\BukuKasController@notes_book')->name('noted_book');
     Route::patch('/book/{id_catatan}/update', 'Web\BukuKasController@update_BukuKas')->name('update_BukuKas');
@@ -42,19 +43,18 @@ Route::group(['middleware' => ['auth']], function () {
     /* DEBT */
     Route::get('/debt', 'Web\DebtController@index_Debt')->name('index_Debt');
     Route::get('/debt/{id_debt}', 'Web\DebtController@show_Debt')->name('show_Debt');
-    Route::post('/debt/save', 'Web\DebtController@save_Debt');
+    Route::post('/debt/save', 'Web\DebtController@save_Debt')->name('save_Debt');
     Route::get('/debt/{id_debt}/edit', 'Web\DebtController@edit_Debt')->name('edit_Debt');
-    Route::post('/debt/{id_debt}/update', 'Web\DebtController@update_Debt')->name('update_Debt');
+    Route::patch('/debt/{id_debt}/update', 'Web\DebtController@update_Debt')->name('update_Debt');
     Route::get('/debt/{id_debt}/delete', 'Web\DebtController@delete_Debt')->name('delete_Debt');
     /* DEBT END */
 
     /* ACCOUNTS RECEIVABLE */
     Route::get('/account_receivable', 'Web\AccountsReceivableController@index_AccountsReceivable')->name('index_AccountsReceivable');
-    Route::get('/account_receivable/{id_credit}', 'Web\AccountsReceivableController@show_AccountsReceivable')->name('show_AccountsReceivable');
+    Route::get('/account_receivable/{id_piutang}/view', 'Web\AccountsReceivableController@show_AccountsReceivable')->name('show_AccountsReceivable');
     Route::post('/account_receivable/save', 'Web\AccountsReceivableController@save_AccountsReceivable')->name('post_AccountsReceivable');
-    Route::get('/account_receivable/{id_credit}/edit', 'Web\AccountsReceivableController@edit_AccountsReceivable')->name('edit_AccountsReceivable');
-    Route::post('/account_receivable/{id_credit}/update', 'Web\AccountsReceivableController@update_AccountsReceivable')->name('update_AccountsReceivable');
-    Route::get('/account_receivable/{id_credit}/delete', 'Web\AccountsReceivableController@delete_AccountsReceivable')->name('delete_AccountsReceivable');
+    Route::patch('/account_receivable/{id_piutang}/update', 'Web\AccountsReceivableController@update_AccountsReceivable')->name('update_AccountsReceivable');
+    Route::get('/account_receivable/{id_piutang}/delete', 'Web\AccountsReceivableController@delete_AccountsReceivable')->name('delete_AccountsReceivable');
     /* ACCOUNTS RECEIVABLE END */
 
     /* CASH STATEMENT */

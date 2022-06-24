@@ -113,12 +113,15 @@
                                         <select
                                             class="custom-select form-control bg-white custom-radius custom-shadow border-0"
                                             id="list" name="list_data">
-                                            <option class="active" value="5">semua</option>
-                                            <option class="filter" value="10">5</option>
-                                            <option class="filter" value="25">10</option>
-                                            <option class="filter" value="50">20</option>
-                                            <option class="filter" value="100">50</option>
-                                            <option class="filter" value="100">100</option>
+                                            <option value="semua">semua</option>
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                            <option value="30">30</option>
+                                            <option value="35">35</option>
+                                            <option value="40">40</option>
+                                            <option value="45">45</option>
+                                            <option value="50">50</option>
                                         </select>
                                     </li>
                                     {{-- END PAGINATE DATA TABLE --}}
@@ -141,9 +144,6 @@
                                         </tr>
                                     </thead>
                                     <tbody id="search1">
-                                        <label class="noResults" align="right" style="display:none; color:red">
-                                            <b><i>No Match Found</i></b>
-                                        </label>
                                         @foreach ($noted_cash_book_id as $buku)
                                             @if ($buku->catatan_keterangan == 'Pengeluaran')
                                                 <tr class="table-danger">
@@ -151,6 +151,8 @@
                                                     </th>
                                                     <td class="text-center">
                                                         {{ \Carbon\Carbon::parse($buku->created_at)->locale('id')->isoformat('DD MMMM Y') }}
+                                                        <span
+                                                            hidden>{{ \Carbon\Carbon::parse($buku->created_at)->format('Y-m-d') }}</span>
                                                     </td>
                                                     <td class="text-center">
                                                         {{ ucwords($buku->nama_kategori) }}
@@ -175,6 +177,8 @@
                                                     </th>
                                                     <td class="text-center">
                                                         {{ \Carbon\Carbon::parse($buku->created_at)->locale('id')->isoformat('DD MMMM Y') }}
+                                                        <span
+                                                            hidden>{{ \Carbon\Carbon::parse($buku->created_at)->format('Y-m-d') }}</span>
                                                     </td>
                                                     <td class="text-center">
                                                         {{ ucwords($buku->nama_kategori) }}
@@ -737,10 +741,36 @@
         /*========================================= SEARCH END ===============================*/
         /*========================================= FILTER DATE  ===============================*/
         function filterRows() {
-            var date = $('#startDate').val()
-            console.log(date)
+            var dateFrom = $('#startDate').val()
+            var dateTo = dateFrom
+            $('#search1 tr').each(function(i, tr) {
+                var val = $(tr).find("td:nth-child(2)").text();
+                var dateVal = moment(val, "YYY-MM-DD", false);
+                var visible = (dateVal.isBetween(dateFrom, dateTo, null, [])) ? "" : "none"; // [] for inclusive
+                $(tr).css('display', visible);
+            });
         }
         $('#startDate').on("change", filterRows);
         /*========================================= FILTER DATE END ===============================*/
+
+        /*========================================= FILTER OPTION  ===============================*/
+        $(document).ready(function($) {
+            $('#search1').show();
+            $('#list').change(function() {
+                $('#search1').hide();
+                var selection = $(this).val();
+                console.log(selection)
+                var dataset = $('#search1 tbody').find('tr');
+                // show all rows first
+                dataset.show();
+                // filter the rows that should be hidden
+                dataset.filter(function(index, item) {
+                    return $(item).find('td:first-child').text().split(',').indexOf(selection) === -
+                        1;
+                }).hide();
+
+            });
+        });
+        /*========================================= FILTER OPTION END ===============================*/
     </script>
 @endsection
