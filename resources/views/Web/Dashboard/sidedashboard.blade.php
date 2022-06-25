@@ -36,8 +36,8 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)" id="bell"
-                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)"
+                        id="bell" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span><i data-feather="bell" class="svg-icon"></i></span>
                         <span class="badge badge-primary notify-no rounded-circle">5</span>
                     </a>
@@ -133,9 +133,10 @@
                                 class="svg-icon mr-2 ml-1"></i>
                             Account Setting</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();"><i data-feather="power"
-                                class="svg-icon mr-2 ml-1"></i>{{ __('Logout') }}</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();"><i
+                                data-feather="power" class="svg-icon mr-2 ml-1"></i>{{ __('Logout') }}</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
@@ -162,8 +163,7 @@
                         </span></a>
                     <ul aria-expanded="false" class="collapse first-level base-level-line">
                         <li class="sidebar-item ">
-                            <a href="{{ route('index_BukuKas') }}" class="sidebar-link "><span
-                                    class="hide-menu ">
+                            <a href="{{ route('index_BukuKas') }}" class="sidebar-link "><span class="hide-menu ">
                                     Buku Kas
                                 </span>
                             </a>
@@ -227,8 +227,7 @@
                             Menyurat</span></a>
                     <ul aria-expanded="false" class="collapse first-level base-level-line">
                         <li class="sidebar-item">
-                            <a href="{{ route('index_Letter') }}" class="sidebar-link"><span
-                                    class="hide-menu">
+                            <a href="{{ route('index_Letter') }}" class="sidebar-link"><span class="hide-menu">
                                     Surat
                                     Menyurat</span></a>
                         </li>

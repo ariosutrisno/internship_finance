@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -14,45 +15,7 @@ class CashStatementController extends Controller
     {
         return Auth::id();
     }
-    function hari_ini($hari)
-    {
 
-        switch ($hari) {
-            case 'Sun':
-                $hari_ini = "Minggu";
-                break;
-
-            case 'Mon':
-                $hari_ini = "Senin";
-                break;
-
-            case 'Tue':
-                $hari_ini = "Selasa";
-                break;
-
-            case 'Wed':
-                $hari_ini = "Rabu";
-                break;
-
-            case 'Thu':
-                $hari_ini = "Kamis";
-                break;
-
-            case 'Fri':
-                $hari_ini = "Jumat";
-                break;
-
-            case 'Sat':
-                $hari_ini = "Sabtu";
-                break;
-
-            default:
-                $hari_ini = "Tidak di ketahui";
-                break;
-        }
-
-        return $hari_ini;
-    }
     public function daily_CashStatement()
     {
         /* ALL BOOK */
@@ -69,7 +32,6 @@ class CashStatementController extends Controller
             $date = date('Y-m-d', strtotime($daily));
             $datefrom = date('Y-m-d', strtotime('-22 days'));
             $dateto = date('Y-m-d', strtotime('+7 days'));
-            // dd($datefrom, $dateto);
             $all_noted_daily_CashStatement = DB::table('tbl_catatan_buku')->where('id_users', '=', $this->Auth())->whereBetween('created_at', [$datefrom, $dateto])->orderBy('created_at', 'asc')->paginate(10);
             $chart = DB::table('tbl_catatan_buku')->where('id_users', '=', $this->Auth())->where('catatan_keterangan', '=', 'Pemasukan')->whereDate('created_at', '=', $date)->sum('catatan_saldo_kas');
             $nominal_income[] = $chart;
@@ -94,21 +56,20 @@ class CashStatementController extends Controller
         $all_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->get();
         /* ALL BOOK END */
         /* STATICSITC */
-        for ($i = 0; $i <= 6; $i++) {
+        $startime = new DateTime(date('Y-m-d'));
+        $endtime = new DateTime(date('Y-m-d', strtotime('+1weeks')));
+        for ($i = $startime; $i <= $endtime; $i->modify('+1day')) {
             # code...
-            $minggu = date('Y-m-d', strtotime(date('Y-m-d')) - $i);
-            $d = date('D', strtotime($i . 'days'));
-            $day = $this->hari_ini($d);
-            $e[] = $day;
-            $datefrom_week = date('Y-m-d', strtotime('-23 days'));
-            $dateto_week = date('Y-m-d', strtotime('-29 days'));
-            $all_noted_weekly_CashStatement = DB::table('tbl_catatan_buku')->where('id_users', '=', $this->Auth())->whereDate('created_at', '=', date('Y-m-d'))->orderBy('created_at', 'asc')->paginate(10);
-            $catatan_jumlahminggu = DB::table('tbl_catatan_buku')->where('id_users', '=', $this->Auth())->where('catatan_keterangan', '=', 'Pemasukan')->whereDate('created_at', '=', $minggu)->sum('catatan_saldo_kas');
+            $array[] = (Carbon::parse($i->format("Y-m-d"))->locale('id')->isoformat('dddd'));
+            $arrays[] = $i->format('Y-m-d');
+            $created_at = $i->format('Y-m-d');
+            $all_noted_weekly_CashStatement = DB::table('tbl_catatan_buku')->where('id_users', '=', $this->Auth())->whereDate('created_at', '=', $arrays)->orderBy('created_at', 'asc')->paginate(10);
+            $catatan_jumlahminggu = DB::table('tbl_catatan_buku')->where('id_users', '=', $this->Auth())->where('catatan_keterangan', '=', 'Pemasukan')->whereDate('created_at', '=', $created_at)->sum('catatan_saldo_kas');
             $catatan_jumlahminggu12[] = $catatan_jumlahminggu;
-            $catatan_jumlahminggu2 = DB::table('tbl_catatan_buku')->where('id_users', '=', $this->Auth())->where('catatan_keterangan', '=', 'Pengeluaran')->whereDate('created_at', '=', $minggu)->sum('catatan_saldo_kas');
+            $catatan_jumlahminggu2 = DB::table('tbl_catatan_buku')->where('id_users', '=', $this->Auth())->where('catatan_keterangan', '=', 'Pengeluaran')->whereDate('created_at', '=', $created_at)->sum('catatan_saldo_kas');
             $catatan_jumlahminggu24[] = $catatan_jumlahminggu2;
         }
-        $weekly = json_encode($e);
+        $weekly = json_encode($array);
         $weekly_income = json_encode($catatan_jumlahminggu12);
         $weekly_expenditure = json_encode($catatan_jumlahminggu24);
         /* STATICSITC END */
@@ -230,21 +191,20 @@ class CashStatementController extends Controller
         $name_cash_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->where('id_kas', '=', $id_kas)->first();
         /* ALL BOOK END */
         /* STATISTIK */
-        for ($i = 0; $i <= 6; $i++) {
+        $startime = new DateTime(date('Y-m-d'));
+        $endtime = new DateTime(date('Y-m-d', strtotime('+1weeks')));
+        for ($i = $startime; $i <= $endtime; $i->modify('+1day')) {
             # code...
-            $minggu = date('Y-m-d', strtotime(date('Y-m-d')) - $i);
-            $d = date('D', strtotime($i . 'days'));
-            $day = $this->hari_ini($d);
-            $e[] = $day;
-            $datefrom_week = date('Y-m-d', strtotime('-22 days'));
-            $dateto_week = date('Y-m-d', strtotime('+7 days'));
-            $all_noted_weeklyID_CashStatement  = DB::table('tbl_catatan_buku')->where('id_buku_kas', '=', $id_kas)->where('id_users', '=', $this->Auth())->whereDate('created_at', '=', date('Y-m-d'))->orderBy('created_at', 'asc')->paginate(10);
-            $catatan_jumlahminggu = DB::table('tbl_catatan_buku')->where('id_buku_kas', '=', $id_kas)->where('id_users', '=', $this->Auth())->where('catatan_keterangan', '=', 'Pemasukan')->whereDate('created_at', '=', $minggu)->sum('catatan_saldo_kas');
+            $array[] = (Carbon::parse($i->format("Y-m-d"))->locale('id')->isoformat('dddd'));
+            $arrays[] = $i->format('Y-m-d');
+            $created_at = $i->format('Y-m-d');
+            $all_noted_weeklyID_CashStatement = DB::table('tbl_catatan_buku')->where('id_buku_kas', '=', $id_kas)->where('id_users', '=', $this->Auth())->whereDate('created_at', '=', $arrays)->orderBy('created_at', 'asc')->paginate(10);
+            $catatan_jumlahminggu = DB::table('tbl_catatan_buku')->where('id_buku_kas', '=', $id_kas)->where('id_users', '=', $this->Auth())->where('catatan_keterangan', '=', 'Pemasukan')->whereDate('created_at', '=', $created_at)->sum('catatan_saldo_kas');
             $catatan_jumlahminggu12[] = $catatan_jumlahminggu;
-            $catatan_jumlahminggu2 = DB::table('tbl_catatan_buku')->where('id_buku_kas', '=', $id_kas)->where('id_users', '=', $this->Auth())->where('catatan_keterangan', '=', 'Pengeluaran')->whereDate('created_at', '=', $minggu)->sum('catatan_saldo_kas');
+            $catatan_jumlahminggu2 = DB::table('tbl_catatan_buku')->where('id_buku_kas', '=', $id_kas)->where('id_users', '=', $this->Auth())->where('catatan_keterangan', '=', 'Pengeluaran')->whereDate('created_at', '=', $created_at)->sum('catatan_saldo_kas');
             $catatan_jumlahminggu24[] = $catatan_jumlahminggu2;
         }
-        $weekly = json_encode($e);
+        $weekly = json_encode($array);
         $weekly_income = json_encode($catatan_jumlahminggu12);
         $weekly_expenditure = json_encode($catatan_jumlahminggu24);
         /* STATISTIK END */
@@ -290,14 +250,34 @@ class CashStatementController extends Controller
     public function annualID_CashStatement($id_kas)
     {
         /* ALL BOOK */
-        $all_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->where('id_kas', '=', $id_kas)->get();
+        $all_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->get();
+        $name_cash_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->where('id_kas', '=', $id_kas)->first();
         /* ALL BOOK END */
         /* ALL NOTED */
-        $all_noted_annualID_CashStatement = DB::table('tbl_catatan_buku')->where('id_users', '=', $this->Auth())->where('id_buku_kas', '=', $id_kas)->get();
+        $all_noted_annualID_CashStatement = DB::table('tbl_catatan_buku')->where('id_buku_kas', '=', $id_kas)->where('id_users', '=', $this->Auth())->whereYear('created_at', '=', date('Y'))->orderBy('created_at', 'asc')->paginate(10);
         /* ALL NOTED */
-        return view('', compact([
+        /* STATISTIC ANNUAL */
+        $year = date('Y');
+        $year1 = date('Y', strtotime('5 years'));
+        for ($i = $year; $i <= $year1; $i++) {
+            # code...
+            $array[] = $i;
+            $date_year = date('Y', strtotime($i . date('-m-d')));
+            $income = DB::table('tbl_catatan_buku')->where('id_buku_kas', '=', $id_kas)->where('id_users', '=', $this->Auth())->where('catatan_keterangan', '=', 'Pemasukan')->whereYear('created_at', '=', $date_year)->sum('catatan_saldo_kas');
+            $statistic_income[] = $income;
+            $expenditure = DB::table('tbl_catatan_buku')->where('id_buku_kas', '=', $id_kas)->where('id_users', '=', $this->Auth())->where('catatan_keterangan', '=', 'Pengeluaran')->whereYear('created_at', '=', $date_year)->sum('catatan_saldo_kas');
+            $statistic_expendeture[] = $expenditure;
+        }
+        $annual = json_encode($array);
+        $annual_income = json_encode($statistic_income);
+        $annual_expenditure = json_encode($statistic_expendeture);
+        return view('Web.Laporan-Kas.ID_lapora_kas.annual', compact([
             'all_book',
-            'all_noted_annualID_CashStatement'
+            'all_noted_annualID_CashStatement',
+            'annual',
+            'annual_income',
+            'annual_expenditure',
+            'name_cash_book'
         ]));
     }
 }

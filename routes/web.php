@@ -71,43 +71,53 @@ Route::group(['middleware' => ['auth']], function () {
 
     /* ================= LETTER ================= */
     /* LEETER COLLECTION */
-    Route::get('/letter', 'Web\LetterController@index_Letter')->name('index_Letter');
-    /* LEETER COLLECTION END */
-    /* CUSTOMER */
-    Route::get('/customer', 'Web\CustomerController@index_Customer')->name('index_Customer');
-    Route::get('/customer/create', 'Web\CustomerController@create_Customer')->name('create_Customer');
-    Route::post('/customer/create/save', 'Web\CustomerController@save_Customer')->name('save_Customer');
-    Route::get('/customer/{id_customer}/view', 'Web\CustomerController@show_Customer')->name('show_Customer');
-    Route::post('/customer/{id_customer}/update', 'Web\CustomerController@update_Customer')->name('update_Customer');
-    Route::get('/customer/{id_customer}/delete', 'Web\CustomerController@delete_Customer')->name('delete_Customer');
-    /* CUSTOMER END */
+    Route::group(['prefix' => 'letter'], function () {
+        Route::get('/types_letter', 'Web\LetterController@index_Letter')->name('index_Letter');
+        /* LEETER COLLECTION END */
+        /* CUSTOMER */
+        Route::prefix('customer')->group(function () {
+            Route::get('/index', 'Web\CustomerController@index_Customer')->name('index_Customer');
+            Route::get('/create', 'Web\CustomerController@create_Customer')->name('create_Customer');
+            Route::post('/create/save', 'Web\CustomerController@save_Customer')->name('save_Customer');
+            Route::get('/{id_customer}/view', 'Web\CustomerController@show_Customer')->name('show_Customer');
+            Route::post('/{id_customer}/update', 'Web\CustomerController@update_Customer')->name('update_Customer');
+            Route::get('/{id_customer}/delete', 'Web\CustomerController@delete_Customer')->name('delete_Customer');
+        });
+        /* CUSTOMER END */
 
-    /* QUOTATION LETTER */
-    Route::get('/quotation-letter', 'Web\QuotationLetterController@index_QuotationLetter')->name('index_QuotationLetter');
-    Route::get('/quotation-letter/create', 'Web\QuotationLetterController@create_QuotationLetter')->name('create_QuotationLetter');
-    Route::post('/quotation-letter/create/save', 'Web\QuotationLetterController@save_QuotationLetter')->name('save_QuotationLetter');
-    Route::get('/quotation-letter/{id_quotation}/view', 'Web\QuotationLetterController@view_QuotationLetter')->name('view_QuotationLetter');
-    Route::post('/quotation-letter/{id_quotation}/update', 'Web\QuotationLetterController@update_QuotationLetter')->name('update_QuotationLetter');
-    Route::get('/quotation-letter/{id_quotation}/delete', 'Web\QuotationLetterController@delete_QuotationLetter')->name('delete_QuotationLetter');
-    Route::get('/quotation-letter/{id_quotation}/print', 'Web\QuotationLetterController@print_QuotationLetter')->name('print_QuotationLetter');
-    /* QUOTATION LETTER END */
-
-    /* OFFERING LETTER */
-    Route::get('/offering-letter', 'Web\OfferingLetterController@index_OfferingLetter')->name('index_OfferingLetter');
-    Route::get('/offering-letter/create', 'Web\OfferingLetterController@create_OfferingLetter')->name('create_OfferingLetter');
-    Route::get('/offering-letter/{id_offering}/view', 'Web\OfferingLetterController@view_OfferingLetter')->name('show_OfferingLetter');
-    Route::get('/offering-letter/{id_offering}/update', 'Web\OfferingLetterController@update_OfferingLetter')->name('update_OfferingLetter');
-    Route::get('/offering-letter/{id_offering}/delete', 'Web\OfferingLetterController@delete_OfferingLetter')->name('delete_OfferingLetter');
-    Route::get('/offering-letter/{id_offering}/print', 'Web\OfferingLetterController@print_OfferingLetter')->name('print_OfferingLetter');
-    /* OFFERING LETTER END */
-    /* INVOICE LETTER END */
-    Route::get('/invoice-letter', 'Web\InvoiceLetterController@index_InvoiceLetter')->name('index_InvoiceLetter');
-    Route::get('/invoice-letter/create', 'Web\InvoiceLetterController@create_InvoiceLetter')->name('create_InvoiceLetter');
-    Route::post('/invoice-letter/create/save', 'Web\InvoiceLetterController@index_InvoiceLetter')->name('save_InvoiceLetter');
-    Route::get('/invoice-letter/{id_invoice}/view', 'Web\InvoiceLetterController@view_InvoiceLetter')->name('view_InvoiceLetter');
-    Route::get('/invoice-letter/{id_invoice}/update', 'Web\InvoiceLetterController@update_InvoiceLetter')->name('update_InvoiceLetter');
-    Route::get('/invoice-letter/{id_invoice}/delete', 'Web\InvoiceLetterController@delete_InvoiceLetter')->name('delete_InvoiceLetter');
-    Route::get('/invoice-letter/{id_invoice}/print', 'Web\InvoiceLetterController@print_InvoiceLetter')->name('print_InvoiceLetter');
-    /* INVOICE LETTER END */
-    /* ================= LETTER END ================= */
+        /* QUOTATION LETTER */
+        Route::prefix('quotation-letter')->group(function () {
+            Route::get('index', 'Web\QuotationLetterController@index_QuotationLetter')->name('index_QuotationLetter');
+            Route::get('create', 'Web\QuotationLetterController@create_QuotationLetter')->name('create_QuotationLetter');
+            Route::post('create/save', 'Web\QuotationLetterController@save_QuotationLetter')->name('save_QuotationLetter');
+            Route::get('{id_quotation}/view', 'Web\QuotationLetterController@view_QuotationLetter')->name('view_QuotationLetter');
+            Route::post('{id_quotation}/update', 'Web\QuotationLetterController@update_QuotationLetter')->name('update_QuotationLetter');
+            Route::get('{id_quotation}/delete', 'Web\QuotationLetterController@delete_QuotationLetter')->name('delete_QuotationLetter');
+            Route::get('{id_quotation}/print', 'Web\QuotationLetterController@print_QuotationLetter')->name('print_QuotationLetter');
+        });
+        /* QUOTATION LETTER END */
+        /* OFFERING LETTER */
+        Route::prefix('offering-letter')->group(function () {
+            Route::get('index', 'Web\OfferingLetterController@index_OfferingLetter')->name('index_OfferingLetter');
+            Route::get('create', 'Web\OfferingLetterController@create_OfferingLetter')->name('create_OfferingLetter');
+            Route::post('store', 'Web\OfferingLetterController@post_OfferingLetter')->name('post_OfferingLetter');
+            Route::get('{id_offering}/view', 'Web\OfferingLetterController@view_OfferingLetter')->name('show_OfferingLetter');
+            Route::get('{id_offering}/update', 'Web\OfferingLetterController@update_OfferingLetter')->name('update_OfferingLetter');
+            Route::get('{id_offering}/delete', 'Web\OfferingLetterController@delete_OfferingLetter')->name('delete_OfferingLetter');
+            Route::get('{id_offering}/print', 'Web\OfferingLetterController@print_OfferingLetter')->name('print_OfferingLetter');
+        });
+        /* OFFERING LETTER END */
+        /* INVOICE LETTER END */
+        Route::prefix('invoice-letter')->group(function () {
+            Route::get('index', 'Web\InvoiceLetterController@index_InvoiceLetter')->name('index_InvoiceLetter');
+            Route::get('create', 'Web\InvoiceLetterController@create_InvoiceLetter')->name('create_InvoiceLetter');
+            Route::post('create/save', 'Web\InvoiceLetterController@save_InvoiceLetter')->name('save_InvoiceLetter');
+            Route::get('{id_invoice}/view', 'Web\InvoiceLetterController@view_InvoiceLetter')->name('view_InvoiceLetter');
+            Route::get('{id_invoice}/update', 'Web\InvoiceLetterController@update_InvoiceLetter')->name('update_InvoiceLetter');
+            Route::get('{id_invoice}/delete', 'Web\InvoiceLetterController@delete_InvoiceLetter')->name('delete_InvoiceLetter');
+            Route::get('{id_invoice}/print', 'Web\InvoiceLetterController@print_InvoiceLetter')->name('print_InvoiceLetter');
+        });
+        /* INVOICE LETTER END */
+        /* ================= LETTER END ================= */
+    });
 });

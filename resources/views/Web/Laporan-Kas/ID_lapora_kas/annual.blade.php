@@ -27,7 +27,8 @@
                                             <img src="{{ asset('frontend/img/Page-1.png') }}" alt="Hutang">
                                         </div>
                                         <div class="col-sm-10 ml-3">
-                                            <span class="h2 text-danger"><strong> Laporan Kas Tahunan
+                                            <span class="h2 text-danger"><strong> Laporan Kas Tahunan -
+                                                    {{ $name_cash_book->nama_buku_kas }}
                                                 </strong></span>
                                             <br><span>uang masuk dan keluar dalam hidup ini</span>
                                         </div>
@@ -78,11 +79,11 @@
                                             id="select">
                                             @if (count($all_book) !== 0)
                                                 <option>Pilih Kas</option>
-                                                <option data-url="/laporan-kas/harian">Semua Kas</option>
+                                                <option data-url="/cash-statement/annual">Semua Kas</option>
                                                 @foreach ($all_book as $item)
                                                     @if ($item->id_kas)
                                                         <option value="{{ $item->id_kas }}"
-                                                            data-url="/cash-statement/{{ $item->id_kas }}/daily">
+                                                            data-url="/cash-statement/{{ $item->id_kas }}/annual">
                                                             {{ $item->nama_buku_kas }}</option>
                                                     @endif
                                                 @endforeach
@@ -98,7 +99,7 @@
                         <div class="container bg-white p-3 mb-5" style="height: 100%;">
 
                             <div class="table-responsive mt-4 mb-5 ">
-                                @if (count($all_noted_annual_CashStatement) !== 0)
+                                @if (count($all_noted_annualID_CashStatement) !== 0)
                                     <table class="table  table-bordered table-sm">
                                         <thead>
                                             <tr class="text-center">
@@ -109,7 +110,7 @@
                                             </tr>
                                         </thead>
                                         <tbody id="tbl_tahunan">
-                                            @foreach ($all_noted_annual_CashStatement as $buku)
+                                            @foreach ($all_noted_annualID_CashStatement as $buku)
                                                 @if ($buku->catatan_keterangan == 'Pengeluaran' && 'pengeluaran')
                                                     <tr class="table-danger">
                                                         <th scope="row" class="text-center "><i
@@ -149,7 +150,7 @@
                                 @else
                                     <p>Data Kosong</p>
                                 @endif
-                                {{ $all_noted_annual_CashStatement->render() }}
+                                {{ $all_noted_annualID_CashStatement->render() }}
                             </div>
                         </div>
                     </div>
@@ -210,13 +211,13 @@
                 labels: <?= $annual ?>,
                 datasets: [{
                         label: 'Pemasukan',
-                    data:<?= $annual_income ?>,
+                        data: <?= $annual_income ?>,
                         backgroundColor: 'rgba(0, 0, 0, 0)',
                         borderColor: 'rgba(0, 0, 255)',
                     },
                     {
                         label: 'pengeluaran',
-                        data:<?= $annual_expenditure ?>,
+                        data: <?= $annual_expenditure ?>,
                         backgroundColor: 'rgba(0, 0, 0, 0)',
                         borderColor: 'rgba(155, 0, 0, 1)',
 

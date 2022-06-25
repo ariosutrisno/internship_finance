@@ -78,11 +78,11 @@
                                             id="select">
                                             @if (count($all_book) !== 0)
                                                 <option>Pilih Kas</option>
-                                                <option data-url="/laporan-kas/harian">Semua Kas</option>
+                                                <option data-url="/cash-statement/annual">Semua Kas</option>
                                                 @foreach ($all_book as $item)
                                                     @if ($item->id_kas)
                                                         <option value="{{ $item->id_kas }}"
-                                                            data-url="/cash-statement/{{ $item->id_kas }}/daily">
+                                                            data-url="/cash-statement/{{ $item->id_kas }}/annual">
                                                             {{ $item->nama_buku_kas }}</option>
                                                     @endif
                                                 @endforeach
@@ -210,13 +210,13 @@
                 labels: <?= $annual ?>,
                 datasets: [{
                         label: 'Pemasukan',
-                    data:<?= $annual_income ?>,
+                        data: <?= $annual_income ?>,
                         backgroundColor: 'rgba(0, 0, 0, 0)',
                         borderColor: 'rgba(0, 0, 255)',
                     },
                     {
                         label: 'pengeluaran',
-                        data:<?= $annual_expenditure ?>,
+                        data: <?= $annual_expenditure ?>,
                         backgroundColor: 'rgba(0, 0, 0, 0)',
                         borderColor: 'rgba(155, 0, 0, 1)',
 
