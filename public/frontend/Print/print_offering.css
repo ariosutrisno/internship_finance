@@ -1,0 +1,199 @@
+@page {
+    size: A4 potrait;
+    margin: 0;
+    padding: 0;
+    
+}
+@media screen, print {
+    *{
+        margin:0;
+        padding: 0;
+    }
+    /* header */
+    header{
+        position: fixed;
+        top: 0;
+        left: auto;
+        right: auto;
+    }
+    /* header end */
+    /* nav  */
+    table.tabNav,th,td{
+        margin-top: 25%;
+        text-align: justify;
+        font-size: 16px;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: normal;
+        margin-left: 10%;
+    }
+    th#thOne,th#thTwo{
+        padding-top: 3%;
+        padding-bottom: 2%;
+    }
+    th#spanOne{
+        text-align: left !important;
+    }
+    th#spanTwo{
+        text-align: right !important;
+    }
+    /* nav end */
+    /* contents */
+    table.contents{
+        margin-top: 2%;
+        text-align: justify;
+        font-size: 20px;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: normal;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    th#thOneContents{
+        padding-bottom: 2%;
+    }
+
+    th#thTwoContents{
+        padding-bottom: 2%;
+        letter-spacing: 0.8px;
+        word-spacing: 1.5px;
+        line-height: 20px;
+
+    }
+    table.tbl_waktu,th#tbl_waktuOne{
+        /* border: 1px solid black;
+        border-collapse: collapse; */
+        text-align: justify;
+        font-size: 16px;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: normal;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    th#tbl_waktuOne{
+        /* border: 1px solid black;
+        border-collapse: collapse; */
+        padding:1%;
+        table-layout: auto;
+        width:200px;
+    }
+    table.contents2{
+        /* border: 1px solid black;
+        border-collapse: collapse; */
+        text-align: justify;
+        font-size: 20px;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: normal;
+        margin-top: 0.5%;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    th#thOnContents2{
+        padding: 5px;
+        letter-spacing: 0.8px;
+        word-spacing: 1.5px;
+        line-height: 20px
+    }
+    /* contents end */
+    /* TTD */
+    table.tbl_ttd{
+        /* border: 1px solid black;
+        border-collapse: collapse; */
+        text-align: justify;
+        font-size: 20px;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: normal;
+        margin-left: auto;
+        margin-right: 10%;
+        margin-top: 5%;
+        
+    }
+
+    th.td_ttd{
+        padding-bottom: 70%;
+    }
+    /* TTD END */
+    /* TABLE KARYAWAN */
+    table.tbl_karyawan{
+        margin-top: 25%;
+        text-align: justify;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: normal;
+        margin-left: 6%;
+        margin-right: 6%;
+        /* border: 1px solid black;
+        border-collapse: collapse; */
+    }
+    th.th_karyawan{
+        padding: 5px;
+    }
+    span.span_karyawan{
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 20px;
+    }
+    td.td_karyawan{
+        padding: 5px;
+    }
+    /* WAKTU KARYAWAN */
+    table.tbl_waktu_karyawan{
+        text-align: justify;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: normal;
+        margin-left: 6%;
+        margin-right: 6%;
+        width: 88%;
+    }
+    th.th_waktu_karyawan{
+        padding: 5px;
+    }
+    /* WAKTU KARYAWAN END */
+    /* TABLE PENUTUP */
+    table.tbl_penutup{
+        text-align: justify;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: normal;
+        margin-left: 6%;
+        margin-right: 6%;
+        width: 88%;
+        /* border: 1px solid black;
+        border-collapse: collapse; */
+    }
+    th.th_penutup{
+        padding: 5px;
+    }
+    th.th_penutup2{
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    /* TABLE PENUTUP END */
+    /* TABLE KARYAWAN END */
+    /* TABLE TTD KARYAWAN  */
+    table.tbl_ttd_karyawan{
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: normal;
+        margin-top: 2%;
+        margin-left: 50%;
+        margin-right: 50%;
+        width: 44%;
+        /* border:1px solid black;
+        border-collapse: collapse; */
+    }
+    th.th_ttd_karyawan{
+        text-align: right;
+        padding: 5px;
+    }
+    th.th_ttd_karyawan2{
+        text-align: right;
+        padding-top: 100px;
+        padding-bottom: 5px;
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+    /* TABLE TTD KARYAWAN END */
+    footer{
+        position: fixed;
+        left: 0;
+        bottom: -5px;
+    }
+}

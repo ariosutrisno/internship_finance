@@ -102,7 +102,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('create', 'Web\OfferingLetterController@create_OfferingLetter')->name('create_OfferingLetter');
             Route::post('store', 'Web\OfferingLetterController@post_OfferingLetter')->name('post_OfferingLetter');
             Route::get('{id_offering}/view', 'Web\OfferingLetterController@view_OfferingLetter')->name('show_OfferingLetter');
-            Route::get('{id_offering}/update', 'Web\OfferingLetterController@update_OfferingLetter')->name('update_OfferingLetter');
+            Route::post('{id_offering}/update', 'Web\OfferingLetterController@update_OfferingLetter')->name('update_OfferingLetter');
             Route::get('{id_offering}/delete', 'Web\OfferingLetterController@delete_OfferingLetter')->name('delete_OfferingLetter');
             Route::get('{id_offering}/print', 'Web\OfferingLetterController@print_OfferingLetter')->name('print_OfferingLetter');
         });

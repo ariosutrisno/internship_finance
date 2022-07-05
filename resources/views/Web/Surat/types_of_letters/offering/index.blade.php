@@ -99,7 +99,7 @@
                                         <tbody id="tbl_offering">
                                             <?php $i = 0; ?>
                                             @foreach ($index_offering as $data)
-                                                @if ($data->letter_peruntukan == 'internship')
+                                                @if ($data->letter_peruntukan == 'Internship')
                                                     <tr class="table-warning">
                                                         <th scope="row" class="text-center ">{{ ++$i }}</i></th>
                                                         <td class="text-center">{{ $data->letter_nama }}</td>
@@ -108,13 +108,13 @@
                                                             {{ \Carbon\Carbon::parse($data->created_at)->locale('id')->isoformat('DD MMMM Y') }}
                                                         </td>
                                                         <td class="text-center">
-                                                            <a href="{{ url('/offering/' . $data->id_letter . '/edit') }}"
+                                                            <a href="{{ url('/letter/offering-letter/' . $data->id_letter . '/view') }}"
                                                                 class="ml-auto mr-1"><img
                                                                     src="{{ asset('frontend/img/edit.png') }}"></a>
-                                                            <a href="{{ url('/offering/' . $data->id_letter . '/delete/') }}"
+                                                            <a href="{{ url('/letter/offering-letter/' . $data->id_letter . '/delete/') }}"
                                                                 class="mr-auto ml-1"><img
                                                                     src="{{ asset('frontend/img/delete-button.png') }}"></a>
-                                                            <a href="{{ url('/offering/' . $data->id_letter . '/print/') }}"
+                                                            <a href="{{ url('/letter/offering-letter/' . $data->id_letter . '/print/') }}"
                                                                 class="mr-auto ml-1"><img
                                                                     src="{{ asset('frontend/img/export.png') }}"></a>
                                                         </td>
@@ -129,40 +129,18 @@
                                                             {{ \Carbon\Carbon::parse($data->created_at)->locale('id')->isoformat('DD MMMM Y') }}
                                                         </td>
                                                         <td class="text-center">
-                                                            <a href="{{ url('/offering/' . $data->id_letter . '/edit') }}"
+                                                            <a href="{{ url('/letter/offering-letter/' . $data->id_letter . '/view') }}"
                                                                 class="ml-auto mr-1"><img
                                                                     src="{{ asset('frontend/img/edit.png') }}"></a>
-                                                            <a href="{{ url('/offering/' . $data->id_letter . '/delete/') }}"
+                                                            <a href="{{ url('/letter/offering-letter/' . $data->id_letter . '/delete/') }}"
                                                                 class="mr-auto ml-1"><img
                                                                     src="{{ asset('frontend/img/delete-button.png') }}"></a>
-                                                            <a href="{{ url('/offering/' . $data->id_letter . '/print/') }}"
+                                                            <a href="{{ url('/letter/offering-letter/' . $data->id_letter . '/print/') }}"
                                                                 class="mr-auto ml-1"><img
                                                                     src="{{ asset('frontend/img/export.png') }}"></a>
                                                         </td>
                                                     </tr>
                                                 @endif
-
-                                                {{-- @if ($data->letter_peruntukan == '1')
-                                                    <td class="text-center">Penerimaan Karyawan</td>
-                                                @else
-                                                    <td class="text-center">Penerimaan Internship</td>
-                                                @endif
-                                                <td class="text-center">
-                                                    {{ \Carbon\Carbon::parse($data->created_at)->locale('id')->isoformat('DD MMMM Y') }}
-                                                </td>
-                                                <td class="text-center">
-
-                                                    <a href="{{ url('/offering/' . $data->id_letter . '/edit') }}"
-                                                        class="ml-auto mr-1"><img
-                                                            src="{{ asset('frontend/img/edit.png') }}"></a>
-                                                    <a href="{{ url('/offering/' . $data->id_letter . '/delete/') }}"
-                                                        class="mr-auto ml-1"><img
-                                                            src="{{ asset('frontend/img/delete-button.png') }}"></a>
-                                                    <a href="{{ url('/offering/' . $data->id_letter . '/print/') }}"
-                                                        class="mr-auto ml-1"><img
-                                                            src="{{ asset('frontend/img/export.png') }}"></a>
-                                                </td>
-                                                </tr> --}}
                                             @endforeach
                                         </tbody>
                                     </table>
