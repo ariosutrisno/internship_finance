@@ -6,50 +6,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Print Offering</title>
-    {{-- <link rel="stylesheet" href="frontend/Print/print_offering.css"> --}}
-    <link rel="stylesheet" href="{{ asset('frontend/Print/print_offering.css') }}">
+    <link rel="stylesheet" href="frontend/Print/print_offering.css">
+    {{-- <link rel="stylesheet" href="{{ asset('frontend/Print/print_offering.css') }}"> --}}
 </head>
 
 <body>
     <header>
-        <img src="{{ asset('frontend/img/Kop-Surat-Alan-2020.png') }}" width="100%" alt="alan-kop">
+        {{-- <img src="{{ asset('frontend/img/Kop-Surat-Alan-2020.png') }}" width="100%" alt="alan-kop"> --}}
+        <img src="frontend/img/Kop-Surat-Alan-2020.png" width="100%" alt="alan-kop">
     </header>
     <nav>
         <div class="container">
             @if ($id_print_offering->letter_peruntukan == 'Internship')
                 <table class="tabNav">
-                    <tr>
-                        <th width="10%" id="thOne">
-                            <span id="spanOne">Nomor</span>
-                        </th>
-                        <th width="40%" id="thTwo">
-                            <span id="spanTwo">: {{ $id_print_offering->nomor_surat }}</span>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th width="10%" id="thOne">
-                            <span id="spanOne">Perihal</span>
-                        </th>
-                        <th width="40%" id="thTwo">
-                            <span id="spanTwo">: Konfirmasi Intership</span>
-                        </th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th class="thOne">
+                                <span class="spanOne">Nomor</span>
+                            </th>
+                            <th class="thTwo">
+                                <span class="spanOne">: {{ $id_print_offering->nomor_surat }}</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="thOne">
+                                <span class="spanOne">Perihal</span>
+                            </th>
+                            <th class="thTwo">
+                                <span class="spanOne">: Konfirmasi Intership</span>
+                            </th>
+                        </tr>
+                    </thead>
                 </table>
                 <table class="contents">
                     <thead>
                         <tr>
-                            <th id="thOneContents" width="10%">Hello,
-                                {{ ucwords($id_print_offering->letter_nama) }}</th>
+                            <th class="thOneContents">
+                                <span class="span_Contents">
+                                    Hello,
+                                    {{ ucwords($id_print_offering->letter_nama) }}
+                                </span>
+                            </th>
                         </tr>
                         <tr>
-                            <th id="thTwoContents" width="10%">Berdasarkan lamaran internship anda pada tanggal
-                                {{ \Carbon\Carbon::parse($id_print_offering->created_at)->locale('id')->isoFormat(' D MMMM Y') }}
-                                melalui email <a href="mailto:someone@example.com">karir@alan.co.id</a>. Hasil
-                                interview, dan hasil tugas yang diberikan, maka dengan ini kami ingin mengabarkan bahwa
-                                anda DITERIMA untuk melaksanakan INTERNSHIP di Alan Creative yang bernaung dibawah PT.
-                                Alan Mediatech Indonesia.
-                                <br>Adapun jadwal pelaksanaan internship di Alan Creative akan
-                                dilaksanakan dengan rincian sebagai berikut:
+                            <th class="thTwoContents">
+                                <span class="span_Contents">
+                                    Berdasarkan lamaran internship anda pada tanggal
+                                    {{ \Carbon\Carbon::parse($id_print_offering->created_at)->locale('id')->isoFormat(' D MMMM Y') }}
+                                    melalui email <a href="mailto:someone@example.com">karir@alan.co.id</a>. Hasil
+                                    interview, dan hasil tugas yang diberikan, maka dengan ini kami ingin mengabarkan
+                                    bahwa
+                                    anda DITERIMA untuk melaksanakan INTERNSHIP di Alan Creative yang bernaung dibawah
+                                    PT.
+                                    Alan Mediatech Indonesia.
+                                    <br>Adapun jadwal pelaksanaan internship di Alan Creative akan
+                                    dilaksanakan dengan rincian sebagai berikut:
+                                </span>
                             </th>
                         </tr>
                     </thead>
@@ -57,54 +69,90 @@
                 <table class="tbl_waktu">
                     <thead>
                         <tr>
-                            <th id="tbl_waktuOne">Hari dan Tanggal Mulai</th>
-                            <th id="tbl_waktuOne">:
-                                {{ \Carbon\Carbon::parse($id_print_offering->letter_date_mulai)->locale('id')->isoFormat(' D MMMM Y') }}
+                            <th id="tbl_waktuOne">
+                                <span>
+                                    Hari dan Tanggal Mulai
+                                </span>
+                            </th>
+                            <th id="tbl_waktuOne1">
+                                <span>
+                                    :
+                                    {{ \Carbon\Carbon::parse($id_print_offering->letter_date_mulai)->locale('id')->isoFormat(' D MMMM Y') }}
+                                </span>
                             </th>
                         </tr>
                         <tr>
-                            <th id="tbl_waktuOne">Hari dan Tanggal Selesai</th>
-                            <th id="tbl_waktuOne">:
-                                {{ \Carbon\Carbon::parse($id_print_offering->letter_date_selesai)->locale('id')->isoFormat(' D MMMM Y') }}
+                            <th id="tbl_waktuOne">
+                                <span>Hari dan Tanggal Selesai</span>
+                            </th>
+                            <th id="tbl_waktuOne1">
+                                <span>
+                                    :
+                                    {{ \Carbon\Carbon::parse($id_print_offering->letter_date_selesai)->locale('id')->isoFormat(' D MMMM Y') }}
+                                </span>
                             </th>
                         </tr>
                         <tr>
-                            <th id="tbl_waktuOne">Jadwal Masuk</th>
-                            <th id="tbl_waktuOne">: Senin - Jumat</th>
-                        </tr>
-                        <tr>
-                            <th id="tbl_waktuOne">Waktu Masuk</th>
-                            <th id="tbl_waktuOne">:
-                                {{ \Carbon\Carbon::parse($id_print_offering->letter_date_mulai)->format('H:i') }} -
-                                {{ \Carbon\Carbon::parse($id_print_offering->letter_date_selesai)->format('H:i') }}
+                            <th id="tbl_waktuOne">
+                                <span>Jadwal Masuk</span>
+                            </th>
+                            <th id="tbl_waktuOne1">
+                                <span>: Senin - Jumat</span>
                             </th>
                         </tr>
                         <tr>
-                            <th id="tbl_waktuOne">Pembimbing</th>
-                            <th id="tbl_waktuOne">:
-                                {{ ucwords($id_print_offering->letter_pembimbing) }}</th>
+                            <th id="tbl_waktuOne">
+                                <span>Waktu Masuk</span>
+                            </th>
+                            <th id="tbl_waktuOne1">
+                                <span>
+                                    :
+                                    {{ \Carbon\Carbon::parse($id_print_offering->letter_date_mulai)->format('H:i') }}
+                                    -
+                                    {{ \Carbon\Carbon::parse($id_print_offering->letter_date_selesai)->format('H:i') }}
+                                </span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th id="tbl_waktuOne">
+                                <span>
+                                    Pembimbing
+                                </span>
+                            </th>
+                            <th id="tbl_waktuOne1">
+                                <span>
+                                    :
+                                    {{ ucwords($id_print_offering->letter_pembimbing) }}
+                            </th>
+                            </span>
                         </tr>
                     </thead>
                 </table>
                 <table class="contents2">
                     <thead>
                         <tr>
-                            <th id="thOnContents2" width="10%">
-                                Demikian informasi penerimaan internship ini kami sampaikan, jika ada yang ingin
-                                ditanyakan dapat langsung menghubungi kami melalui email atau nomor yang tertera. Atas
-                                Perhatian dan kerjasamanya,
-                                kami ucapkan terima kasih.
+                            <th class="thOnContents2">
+                                <span class="spanContents2">
+                                    Demikian informasi penerimaan internship ini kami sampaikan, jika ada yang ingin
+                                    ditanyakan dapat langsung menghubungi kami melalui email atau nomor yang tertera.
+                                    Atas Perhatian dan kerjasamanya, kami ucapkan terima kasih.
+                                </span>
                             </th>
                         </tr>
                     </thead>
                 </table>
-                <table class="tbl_ttd">
+                <table class="tbl_ttd_internship">
                     <thead>
                         <tr>
-                            <th class="td_ttd">Chief Executive Officer</th>
+                            <th class="th_ttd_internship">Depok,
+                                {{ \Carbon\Carbon::parse($id_print_offering->created_at)->locale('id')->isoformat('DD MMMM Y') }}
+                            </th>
                         </tr>
                         <tr>
-                            <th class="td_ttd2">Ahmad Alimuddin, S.Kom</th>
+                            <th class="th_ttd_internship">Chief Executive Officer</th>
+                        </tr>
+                        <tr>
+                            <th class="th_ttd_internship1">Ahmad Alimuddin, S.Kom</th>
                         </tr>
                     </thead>
                 </table>
@@ -272,8 +320,8 @@
         </div>
     </nav>
     <footer>
-        <img src="{{ asset('frontend/img/Kopsurat_footer_2020.jpg') }}" alt="" width='100%'
-            style="bottom:0">
+        <img src="frontend/img/Kopsurat_footer_2020.jpg" alt="footer" width='100%'>
+        {{-- <img src="{{ asset('frontend/img/Kopsurat_footer_2020.jpg') }}" alt="" width='100%'> --}}
     </footer>
     <script>
         window.print();

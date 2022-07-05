@@ -141,8 +141,8 @@ class OfferingLetterController extends Controller
     public function print_OfferingLetter($id_offering)
     {
         $id_print_offering = DB::table('tbl_offering_letter')->where('id_letter', '=', $id_offering)->first();
-        // $pdf = FacadePdf::loadview('Web.Surat.types_of_letters.offering.print', compact(['id_print_offering']))->setPaper('A4', 'potrait');
-        // return $pdf->stream();
+        $pdf = FacadePdf::loadview('Web.Surat.types_of_letters.offering.print', compact(['id_print_offering']))->setPaper('A4', 'potrait');
+        return $pdf->download('offering letter.pdf');
         return view('Web.Surat.types_of_letters.offering.print', compact(['id_print_offering']));
     }
     public function view_OfferingLetter($id_offering)

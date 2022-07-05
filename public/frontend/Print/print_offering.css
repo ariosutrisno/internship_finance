@@ -18,97 +18,109 @@
     }
     /* header end */
     /* nav  */
-    table.tabNav,th,td{
+    table.tabNav{
         margin-top: 25%;
-        text-align: justify;
-        font-size: 16px;
-        font-family: 'Times New Roman', Times, serif;
-        font-weight: normal;
         margin-left: 10%;
+        margin-right: 10%;
+        width:80%;
     }
-    th#thOne,th#thTwo{
-        padding-top: 3%;
-        padding-bottom: 2%;
+    th.thOne,th.thTwo{
+        padding-bottom: 12px;
+        text-align: justify;
+        font-family: 'Times New Roman', Times, serif;
     }
-    th#spanOne{
-        text-align: left !important;
+    th.thOne{
+        width: 20%;
     }
-    th#spanTwo{
-        text-align: right !important;
+    span.spanOne{
+        font-size: 16px;
+        font-weight: normal;
     }
+    
     /* nav end */
     /* contents */
     table.contents{
         margin-top: 2%;
-        text-align: justify;
-        font-size: 20px;
-        font-family: 'Times New Roman', Times, serif;
-        font-weight: normal;
         margin-left: 10%;
         margin-right: 10%;
+        width: 80%;
     }
-    th#thOneContents{
-        padding-bottom: 2%;
+    span.span_Contents{
+        font-weight: normal;
+        font-size: 16px;
+        font-family: 'Times New Roman', Times, serif;
+    }
+    th.thOneContents{
+        text-align: justify ;
     }
 
-    th#thTwoContents{
+    th.thTwoContents{
         padding-bottom: 2%;
         letter-spacing: 0.8px;
         word-spacing: 1.5px;
         line-height: 20px;
-
+        text-align: justify ;
     }
-    table.tbl_waktu,th#tbl_waktuOne{
-        /* border: 1px solid black;
-        border-collapse: collapse; */
+    table.tbl_waktu,th#tbl_waktuOne,th#tbl_waktuOne1{
+        margin-left: 10%;
+        margin-right: 10%;
+        width: 80%;
+    }
+    th#tbl_waktuOne{
+        text-align: center;
+        font-size: 16px;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: normal;
+        padding: 5px;
+    }
+    th#tbl_waktuOne1{
         text-align: justify;
         font-size: 16px;
         font-family: 'Times New Roman', Times, serif;
         font-weight: normal;
-        margin-left: auto;
-        margin-right: auto;
+        padding: 5px;
     }
-    th#tbl_waktuOne{
-        /* border: 1px solid black;
-        border-collapse: collapse; */
-        padding:1%;
-        table-layout: auto;
-        width:200px;
-    }
-    table.contents2{
-        /* border: 1px solid black;
-        border-collapse: collapse; */
-        text-align: justify;
-        font-size: 20px;
-        font-family: 'Times New Roman', Times, serif;
-        font-weight: normal;
+    table.contents2,th.thOnContents2{
         margin-top: 0.5%;
         margin-left: 10%;
         margin-right: 10%;
+        width: 80%;
     }
-    th#thOnContents2{
-        padding: 5px;
+    th.thOnContents2{
+        text-align: justify;
+        font-weight: normal;
+        line-height: 20px;
+        font-size: 16px;
+        font-family: 'Times New Roman', Times, serif;
         letter-spacing: 0.8px;
         word-spacing: 1.5px;
-        line-height: 20px
+        padding: 5px;
     }
     /* contents end */
     /* TTD */
-    table.tbl_ttd{
-        /* border: 1px solid black;
-        border-collapse: collapse; */
-        text-align: justify;
-        font-size: 20px;
-        font-family: 'Times New Roman', Times, serif;
-        font-weight: normal;
-        margin-left: auto;
-        margin-right: 10%;
+    table.tbl_ttd_internship,th.th_ttd_internship,th.th_ttd_internship1{
         margin-top: 5%;
-        
+        margin-left: 10%;
+        margin-right: 10%;
+        width: 80%;
     }
 
-    th.td_ttd{
-        padding-bottom: 70%;
+    th.th_ttd_internship{
+        text-align: right;
+        font-size: 16px;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: normal;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    th.th_ttd_internship1{
+        text-align: right;
+        font-size: 16px;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: normal;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top:100px;
     }
     /* TTD END */
     /* TABLE KARYAWAN */
@@ -135,6 +147,7 @@
     }
     /* WAKTU KARYAWAN */
     table.tbl_waktu_karyawan{
+         margin-top: 2%;
         text-align: justify;
         font-family: 'Times New Roman', Times, serif;
         font-weight: normal;
@@ -148,6 +161,7 @@
     /* WAKTU KARYAWAN END */
     /* TABLE PENUTUP */
     table.tbl_penutup{
+        margin-top: 2%;
         text-align: justify;
         font-family: 'Times New Roman', Times, serif;
         font-weight: normal;
