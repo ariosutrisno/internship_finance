@@ -124,52 +124,61 @@
     }
     /* TTD END */
     /* TABLE KARYAWAN */
-    table.tbl_karyawan{
+    table.tbl_karyawan,th.th_karyawan{
         margin-top: 25%;
+        margin-left: 10%;
+        margin-right: 10%;
+        width: 80%;
+    }
+    th.th_karyawan,span.span_karyawan{
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: 5px;
         text-align: justify;
         font-family: 'Times New Roman', Times, serif;
-        font-weight: normal;
-        margin-left: 6%;
-        margin-right: 6%;
-        /* border: 1px solid black;
-        border-collapse: collapse; */
-    }
-    th.th_karyawan{
-        padding: 5px;
-    }
-    span.span_karyawan{
         font-size: 16px;
         font-weight: normal;
         line-height: 20px;
     }
-    td.td_karyawan{
-        padding: 5px;
-    }
+    
     /* WAKTU KARYAWAN */
-    table.tbl_waktu_karyawan{
-         margin-top: 2%;
+    table.tbl_waktu_karyawan,th.th_waktu_karyawan,th.th_waktu_karyawan1{
+        margin-top: 2%;
+        margin-left: 10%;
+        margin-right: 10%;
+        width: 80%;
+    }
+    th.th_waktu_karyawan1{
+        width: 30%;
+    }
+    p.span_waktu_karyawan1{
         text-align: justify;
         font-family: 'Times New Roman', Times, serif;
         font-weight: normal;
-        margin-left: 6%;
-        margin-right: 6%;
-        width: 88%;
     }
-    th.th_waktu_karyawan{
-        padding: 5px;
+    p.span_waktu_karyawan{
+        text-align: justify;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: normal;
+    }
+    p.span_waktu_karyawan_p{
+        text-align: justify;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: normal;
+        padding-left: 8px;
     }
     /* WAKTU KARYAWAN END */
     /* TABLE PENUTUP */
-    table.tbl_penutup{
+    table.tbl_penutup,th.th_penutup,th.th_penutup2{
         margin-top: 2%;
+        margin-left: 10%;
+        margin-right: 10%;
+        width: 80%;
+    }
+    p.p_penutup{
         text-align: justify;
         font-family: 'Times New Roman', Times, serif;
         font-weight: normal;
-        margin-left: 6%;
-        margin-right: 6%;
-        width: 88%;
-        /* border: 1px solid black;
-        border-collapse: collapse; */
     }
     th.th_penutup{
         padding: 5px;
@@ -183,18 +192,19 @@
     /* TABLE PENUTUP END */
     /* TABLE KARYAWAN END */
     /* TABLE TTD KARYAWAN  */
-    table.tbl_ttd_karyawan{
+    table.tbl_ttd_karyawan,th.th_ttd_karyawan,th.th_ttd_karyawan2{
+        margin-top: 2%;
+        margin-left: 10%;
+        margin-right: 10%;
+        width: 80%;
+    }
+    p.span_ttd_karyawan{
         font-family: 'Times New Roman', Times, serif;
         font-weight: normal;
-        margin-top: 2%;
-        margin-left: 50%;
-        margin-right: 50%;
-        width: 44%;
-        /* border:1px solid black;
-        border-collapse: collapse; */
+        text-align: right;
     }
     th.th_ttd_karyawan{
-        text-align: right;
+        
         padding: 5px;
     }
     th.th_ttd_karyawan2{

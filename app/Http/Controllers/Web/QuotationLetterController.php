@@ -15,7 +15,7 @@ class QuotationLetterController extends Controller
     }
     public function index_QuotationLetter()
     {
-        $all_data_quotation = DB::table('tbl_quotation_letter')->where('id_users', '=', $this->auth())->orderByDesc('created_at')->paginate('10');
+        $all_data_quotation = DB::table('tbl_quotation_letter')->where('id_users', '=', $this->auth())->orderByDesc('created_at')->paginate(10);
         return view('Web.Surat.types_of_letters.quotation.index', compact([
             'all_data_quotation',
         ]));
@@ -37,15 +37,31 @@ class QuotationLetterController extends Controller
     }
     public function save_QuotationLetter(Request $request)
     {
+        $request->validate(
+            [
+                'name_customer' => 'required',
+                'dikirim' => 'required|date_format:Y-m-d',
+                'tempo' => 'required|date_format:Y-m-d',
+                'perihal' => 'required',
+                'catatan' => 'required',
+            ],
+            [
+                'perihal.required' => 'Isi Input Perihal Ini.',
+                'catatan.required' => 'Tuliskan Catatan Tersebut',
+                'name_customer.required' => 'Silahkan pilih satu nama customer',
+                'dikirim.required' => 'Isi Tanggal Dikirim',
+                'tempo.required' => 'Isi Tanggal Jatuh Tempo',
+            ]
+        );
         DB::table('tbl_quotation_letter')->insert([
             'id_users' => $this->auth(),
-            'id_customer' => $request->id_customer,
+            'id_customer' => $request->name_customer,
             'nomor_surat' => $request->nomor_surat,
-            'created_at' => date('Y-m-d H:i:s', strtotime($request->created_at . date('H:i:s'))),
-            'tgl_jatuh_tempo' => date('Y-m-d H:i:s', strtotime($request->tgl_jatuh_tempo . date('H:i:s'))),
+            'created_at' => date('Y-m-d H:i:s', strtotime($request->dikirim . date('H:i:s'))),
+            'tgl_jatuh_tempo' => date('Y-m-d H:i:s', strtotime($request->tempo . date('H:i:s'))),
             'perihal' => $request->perihal,
-            'pembayaran' => $request->pembayaran,
-            'catatan_keterangan' => $request->catatan_keterangan,
+            'pembayaran' => $request->subtotal,
+            'catatan_keterangan' => $request->catatan,
         ]);
         $id_quotation = DB::getPdo()->lastInsertId();
         if (($request['np'] > 0)) {
@@ -57,10 +73,10 @@ class QuotationLetterController extends Controller
                     'nama_project' => $request['np'][$key],
                     'biaya_project' => $request['cp'][$key],
                 );
-                DB::table('tbl_item_project')->create($data2);
+                DB::table('tbl_item_project')->insert($data2);
             }
         }
-        return redirect()->route('index_QuotationLetter');
+        return redirect()->route('index_QuotationLetter')->with(['Data Succes Saved']);
     }
     public function view_QuotationLetter($id_quotation)
     {
@@ -109,11 +125,32 @@ class QuotationLetterController extends Controller
     }
     public function print_QuotationLetter($id_quotation)
     {
-        $print_id_quotation = DB::table('tbl_quotation_letter')->where('id_quotation', '=', $id_quotation)->where('id_users', '=', $this->auth())->first();
-        $item_id_quotation = DB::table('tbl_item_project')->where('id_quotation', '=', $id_quotation)->first();
+        $print_id_quotation = DB::table('tbl_quotation_letter')->where('id_quotation', '=', $id_quotation)->where('tbl_quotation_letter.id_users', '=', $this->auth())
+            ->join('tbl_customer', 'tbl_quotation_letter.id_customer', '=', 'tbl_customer.id_customer')
+            ->select('tbl_quotation_letter.*', 'tbl_customer.*')
+            ->first();
+        $item_id_quotation = DB::table('tbl_item_project')->where('id_quotation', '=', $id_quotation)->get();
         return view('Web.Surat.types_of_letters.quotation.print', compact([
             'print_id_quotation',
             'item_id_quotation'
         ]));
     }
+    /* JQUERY & JAVASCRIPT */
+    public function getAutocompleteData(Request $request)
+    {
+        if ($request->has('term')) {
+            return DB::table('tbl_customer')->where('name_customer', 'like', '%' . $request->input('term') . '%')->get();
+        }
+    }
+    public function jquerycreate($id_quotation)
+    {
+        $daftar_pelanggan = DB::table('tbl_customer')->where('id_customer', '=', $id_quotation)->first();
+        return response()->json($daftar_pelanggan);
+    }
+    public function jqueryedit($id_quotation)
+    {
+        $daftar_pelanggan = DB::table('tbl_customer')->where('id_customer', '=', $id_quotation)->first();
+        return response()->json($daftar_pelanggan);
+    }
+    /* JQUERY & JAVASCRIPT */
 }

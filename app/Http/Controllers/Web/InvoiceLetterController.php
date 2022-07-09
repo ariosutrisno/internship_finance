@@ -139,9 +139,105 @@ class InvoiceLetterController extends Controller
     }
     public function print_InvoiceLetter($id_invoice)
     {
-        $print_id_invoice = DB::table('tbl_invoice')->where('id_invoice', '=', $id_invoice)->where('id_users', '=', $this->auth())->first();
+        $print_id_invoice = DB::table('tbl_invoice')->where('id_invoice', '=', $id_invoice)->where('tbl_invoice.id_users', '=', $this->auth())
+            ->join('tbl_customer', 'tbl_invoice.id_customer', '=', 'tbl_customer.id_customer')
+            ->select('tbl_invoice.*', 'tbl_customer.*')
+            ->first();
+        $item_project = DB::table('tbl_item_project')->where('id_invoice', '=', $id_invoice)->get();
+        $term = DB::table('tbl_term')->where('id_invoice', '=', $id_invoice)->get();
+        $term1 = DB::table('tbl_term')->where('id_invoice', '=', $id_invoice)->first();
+        for ($i = 0; $i < count($term); $i++) {
+            # code...
+            $termin = $this->KonDecRomawi($i + 1);
+            $term[$i]->termin = $termin;
+        }
         return view('Web.Surat.types_of_letters.invoice.print', compact([
-            'print_id_invoice'
+            'print_id_invoice',
+            'item_project',
+            'term',
+            'term1'
         ]));
+    }
+    function KonDecRomawi($angka)
+    {
+        $hsl = "";
+        if ($angka < 1 || $angka > 5000) {
+            // Statement di atas buat nentuin angka ngga boleh dibawah 1 atau di atas 5000
+            $hsl = "Batas Angka 1 s/d 5000";
+        } else {
+            while ($angka >= 1000) {
+                // While itu termasuk kedalam statement perulangan
+                // Jadi misal variable angka lebih dari sama dengan 1000
+                // Kondisi ini akan di jalankan
+                $hsl .= "M";
+                // jadi pas di jalanin , kondisi ini akan menambahkan M ke dalam
+                // Varible hsl
+                $angka -= 1000;
+                // Lalu setelah itu varible angka di kurangi 1000 ,
+                // Kenapa di kurangi
+                // Karena statment ini mengambil 1000 untuk di konversi menjadi M
+            }
+        }
+
+
+        if ($angka >= 500) {
+            // statement di atas akan bernilai true / benar
+            // Jika var angka lebih dari sama dengan 500
+            if ($angka > 500) {
+                if ($angka >= 900) {
+                    $hsl .= "CM";
+                    $angka -= 900;
+                } else {
+                    $hsl .= "D";
+                    $angka -= 500;
+                }
+            }
+        }
+        while ($angka >= 100) {
+            if ($angka >= 400) {
+                $hsl .= "CD";
+                $angka -= 400;
+            } else {
+                $angka -= 100;
+            }
+        }
+        if ($angka >= 50) {
+            if ($angka >= 90) {
+                $hsl .= "XC";
+                $angka -= 90;
+            } else {
+                $hsl .= "L";
+                $angka -= 50;
+            }
+        }
+        while ($angka >= 10) {
+            if ($angka >= 40) {
+                $hsl .= "XL";
+                $angka -= 40;
+            } else {
+                $hsl .= "X";
+                $angka -= 10;
+            }
+        }
+        if ($angka >= 5) {
+            if ($angka == 9) {
+                $hsl .= "IX";
+                $angka -= 9;
+            } else {
+                $hsl .= "V";
+                $angka -= 5;
+            }
+        }
+        while ($angka >= 1) {
+            if ($angka == 4) {
+                $hsl .= "IV";
+                $angka -= 4;
+            } else {
+                $hsl .= "I";
+                $angka -= 1;
+            }
+        }
+
+        return ($hsl);
     }
 }

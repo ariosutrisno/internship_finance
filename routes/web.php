@@ -90,6 +90,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('index', 'Web\QuotationLetterController@index_QuotationLetter')->name('index_QuotationLetter');
             Route::get('create', 'Web\QuotationLetterController@create_QuotationLetter')->name('create_QuotationLetter');
             Route::post('create/save', 'Web\QuotationLetterController@save_QuotationLetter')->name('save_QuotationLetter');
+            Route::get('/{id_quotation}', 'Web\QuotationLetterController@jquerycreate')->name('quotationjquerycreate');
             Route::get('{id_quotation}/view', 'Web\QuotationLetterController@view_QuotationLetter')->name('view_QuotationLetter');
             Route::post('{id_quotation}/update', 'Web\QuotationLetterController@update_QuotationLetter')->name('update_QuotationLetter');
             Route::get('{id_quotation}/delete', 'Web\QuotationLetterController@delete_QuotationLetter')->name('delete_QuotationLetter');

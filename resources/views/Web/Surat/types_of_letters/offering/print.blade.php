@@ -176,92 +176,80 @@
                                 </span>
                             </th>
                         </tr>
-                    </thead>
-                    <tbody>
                         <tr>
-                            <td class="td_karyawan">
+                            <th class="th_karyawan">
                                 <span class="span_karyawan">
                                     <b>Dengan Hormat,</b>
                                 </span>
-                            </td>
+                            </th>
                         </tr>
                         <tr>
-                            <td class="td_karyawan">
+                            <th class="th_karyawan">
                                 <span class="span_karyawan">
-                                    Sehubungan dengan surat lamaran kerja yang Anda kirimkan ke
-                                    perusahaan kami beberapa waktu
-                                    lalu dan telah melalui proses seleksi berupa wawancara dan tes psikologi, maka
-                                    dengan ini kami
-                                    memberitahukan bahwa Anda diterima bekerja di perusahaan kami. Mohon kehadirannya
+                                    Sehubungan dengan surat lamaran kerja yang Anda kirimkan ke perusahaan kami beberapa
+                                    waktu lalu dan telah melalui proses seleksi berupa wawancara dan tes psikologi, maka
+                                    dengan ini kami memberitahukan bahwa Anda diterima bekerja di perusahaan kami. Mohon
+                                    kehadirannya
                                     pada:
                                 </span>
-                            </td>
+                            </th>
                         </tr>
-                    </tbody>
+                    </thead>
+
                 </table>
                 <table class="tbl_waktu_karyawan">
                     <thead>
                         <tr>
-                            <th class="th_waktu_karyawan" style="width: 20%">
-                                <span class="span_waktu1">Hari dan Tanggal</span>
+                            <th class="th_waktu_karyawan1">
+                                <p class="span_waktu_karyawan1">Hari dan Tanggal</p>
                             </th>
                             <th class="th_waktu_karyawan">
-                                <span class="span_waktu2">:
+                                <p class="span_waktu_karyawan">:
                                     {{ \Carbon\Carbon::parse($id_print_offering->letter_date_mulai)->locale('id')->isoFormat('dddd, D MMMM Y') }}
-                                </span>
+                                </p>
                             </th>
                         </tr>
                         <tr>
-                            <th class="th_waktu_karyawan">
-                                <span>Tempat</span>
+                            <th class="th_waktu_karyawan1">
+                                <p class="span_waktu_karyawan1">Tempat</p>
                             </th>
                             <th class="th_waktu_karyawan">
-                                <span>
+                                <p class="span_waktu_karyawan">
                                     : PT Alan Mediatech Indonesia
-                                </span>
+                                </p>
                             </th>
                         </tr>
                         <tr>
-                            <th class="th_waktu_karyawan">
+                            <th class="th_waktu_karyawan1">
                                 <span></span>
                             </th>
                             <th class="th_waktu_karyawan">
-                                <span>
-                                    Graha Mandiri, Blok B-5, Jl. Tugu Raya, Kelurahan Tugu, Cimanggis,
-                                </span>
+                                <p class="span_waktu_karyawan_p">
+                                    Graha Mandiri, Blok B-5, Jl. Tugu Raya, Kelurahan Tugu, Cimanggis,Depok, Jawa Barat
+                                </p>
                             </th>
                         </tr>
                         <tr>
-                            <th class="th_waktu_karyawan">
-                                <span></span>
+                            <th class="th_waktu_karyawan1">
+                                <p class="span_waktu_karyawan1">Waktu</p>
                             </th>
                             <th class="th_waktu_karyawan">
-                                <span>
-                                    Depok, Jawa Barat
-                                </span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th class="th_waktu_karyawan">
-                                <span>Waktu</span>
-                            </th>
-                            <th class="th_waktu_karyawan">
-                                <span> :
+                                <p class="span_waktu_karyawan"> :
                                     {{ \Carbon\Carbon::parse($id_print_offering->letter_date_mulai)->locale('id')->format('H:i') }}
                                     -
                                     {{ \Carbon\Carbon::parse($id_print_offering->letter_date_selesai)->locale('id')->format('H:i') }}
-                                </span>
+                                </p>
                             </th>
                         </tr>
                         <tr>
-                            <th class="th_waktu_karyawan">
-                                <span>Narahubung</span>
+                            <th class="th_waktu_karyawan1">
+                                <p class="span_waktu_karyawan1">Narahubung</p>
                             </th>
                             <th class="th_waktu_karyawan">
-                                <span> :
+                                <p class="span_waktu_karyawan"> :
                                     {{ $id_print_offering->letter_telepon_pembimbing }} (
                                     {{ $id_print_offering->letter_pembimbing }} )
-                                </span>
+                                </p>
                             </th>
                         </tr>
                     </thead>
@@ -270,21 +258,21 @@
                     <thead>
                         <tr>
                             <th class="th_penutup">
-                                <span>
+                                <p class="p_penutup">
                                     Kami harapkan kedatangan saudari di tempat dan waktu yang telah ditetapkan
                                     tersebut. Apabila ada kendala perihal kehadiran, mohon dapat menginformasikan hal
                                     tersebut kepada
                                     kami.
-                                </span>
+                                </p>
                             </th>
                         </tr>
                         <tr>
                             <th class="th_penutup2">
-                                <span>
+                                <p class="p_penutup">
                                     Demikian yang dapat kami sampaikan. Atas perhatian dan kerjasamanya kami ucapkan
                                     terima
                                     kasih.
-                                </span>
+                                </p>
                             </th>
                         </tr>
                     </thead>
@@ -293,24 +281,24 @@
                     <thead>
                         <tr>
                             <th class="th_ttd_karyawan">
-                                <span class="span_ttd_karyawan">
+                                <p class="span_ttd_karyawan">
                                     Depok,
                                     {{ \Carbon\Carbon::parse($id_print_offering->created_at)->locale('id')->isoformat('DD MMMM Y') }}
-                                </span>
+                                </p>
                             </th>
                         </tr>
                         <tr>
                             <th class="th_ttd_karyawan">
-                                <span class="span_ttd_karyawan">
+                                <p class="span_ttd_karyawan">
                                     Chief Executive Officer
-                                </span>
+                                </p>
                             </th>
                         </tr>
                         <tr>
                             <th class="th_ttd_karyawan2">
-                                <span class="span_ttd_karyawan">
+                                <p class="span_ttd_karyawan">
                                     Ahmad Alimuddin, S.Kom
-                                </span>
+                                </p>
                             </th>
                         </tr>
                     </thead>
