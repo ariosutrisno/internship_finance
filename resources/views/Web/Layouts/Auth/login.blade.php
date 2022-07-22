@@ -7,12 +7,9 @@
             <div class="text-center">
                 <img src="frontend/img/Group 442.png" alt="#">
 
-                <h2 class="pt-5">Lets Get You Set Up</h2>
+                <h2 class="pt-5">First Login</h2>
 
-                <p class="text-justify">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sapiente facere
-                    tempora voluptatibus
-                    laborum tenetur esse. Recusandae, est nobis. Nam et quod earum! Quae, quas? Facere sequi natus dicta
-                    illo tempora!</p>
+                <p class="center" style="font-size: 20px">Login Terlebih Dahulu Sebelum Masuk ke Alan Finance</p>
             </div>
         </div>
     </div>

@@ -7,10 +7,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-auto mr-auto">
-                <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="#">Procedure</a>
-                <a class="nav-item nav-link" href="#">Features</a>
-                <a class="nav-item nav-link " href="#">Social Media</a>
+                <a class="nav-item nav-link active" href="#home">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="#procedure">Procedure</a>
+                <a class="nav-item nav-link" href="#features">Features</a>
+                <a class="nav-item nav-link " href="#social-media">Social Media</a>
 
                 @guest
 
@@ -30,7 +30,8 @@
                             <!-- <i data-feather="chevron-down" class="svg-icon"></i> -->
                         </a>
                         <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();"><i
                                     data-feather="power" class="svg-icon mr-2 ml-1"></i>{{ __('Logout') }}</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

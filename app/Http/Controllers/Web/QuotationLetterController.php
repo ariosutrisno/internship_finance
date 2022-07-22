@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class QuotationLetterController extends Controller
 {
@@ -83,25 +84,48 @@ class QuotationLetterController extends Controller
         $id_quotation_letter = DB::table('tbl_quotation_letter')
             ->where('.tbl_quotation_letter.id_users', '=', $this->auth())->where('tbl_quotation_letter.id_quotation', '=', $id_quotation)
             ->join('tbl_customer', 'tbl_quotation_letter.id_customer', '=', 'tbl_customer.id_customer')
-            ->select('tbl_quotation_letter.*', 'tbl_customer.id_customer', 'tbl_customer.name_customer')
+            ->select('tbl_quotation_letter.*', 'tbl_customer.*',)
             ->first();
+        $customer = DB::table('tbl_customer')->get();
         $item_id_quotation = DB::table('tbl_item_project')->where('id_quotation', '=', $id_quotation)->first();
+        $item_quotation = DB::table('tbl_item_project')->where('id_quotation', '=', $id_quotation)->get();
+        $jpembayaran = $id_quotation_letter->pembayaran;
+        $ppn = $jpembayaran * 0.1;
+        $total = $jpembayaran + $ppn;
         return view('Web.Surat.types_of_letters.quotation.edit', compact([
             'id_quotation_letter',
-            'item_id_quotation'
+            'item_id_quotation',
+            'customer',
+            'total',
+            'item_quotation'
         ]));
     }
     public function update_QuotationLetter(Request $request, $id_quotation)
     {
+        $request->validate(
+            [
+                'name' => 'required',
+                'dikirim' => 'required|date_format:Y-m-d',
+                'tempo' => 'required|date_format:Y-m-d',
+                'perihal' => 'required',
+                'catatan' => 'required',
+            ],
+            [
+                'perihal.required' => 'Isi Input Perihal Ini.',
+                'catatan.required' => 'Tuliskan Catatan Tersebut',
+                'name.required' => 'Silahkan pilih satu nama customer',
+                'dikirim.required' => 'Isi Tanggal Dikirim',
+                'tempo.required' => 'Isi Tanggal Jatuh Tempo',
+            ]
+        );
         DB::table('tbl_quotation_letter')->where('id_quotation', '=', $id_quotation)->update([
-            'id_customer' => $request->id_customer,
-            'created_at' => date('Y-m-d H:i:s', strtotime($request->created_at . date('H:i:s'))),
-            'tgl_jatuh_tempo' => date('Y-m-d H:i:s', strtotime($request->tgl_jatuh_tempo . date('H:i:s'))),
+            'id_customer' => $request->name,
+            'created_at' => date('Y-m-d H:i:s', strtotime($request->dikirim . date('H:i:s'))),
+            'tgl_jatuh_tempo' => date('Y-m-d H:i:s', strtotime($request->tempo . date('H:i:s'))),
             'perihal' => $request->perihal,
-            'pembayaran' => $request->pembayaran,
-            'catatan_keterangan' => $request->catatan_keterangan,
+            'pembayaran' => $request->subtotal,
+            'catatan_keterangan' => $request->catatan,
         ]);
-        $id_quotation = DB::getPdo()->lastInsertId();
         if (($request['np'] > 0)) {
             # code...
             DB::table('tbl_item_project')->where('id_quotation', '=', $id_quotation)->delete();
@@ -112,7 +136,7 @@ class QuotationLetterController extends Controller
                     'nama_project' => $request['np'][$key],
                     'biaya_project' => $request['cp'][$key],
                 );
-                DB::table('tbl_item_project')->create($data2);
+                DB::table('tbl_item_project')->insert($data2);
             }
         }
         return redirect()->route('index_QuotationLetter');
@@ -130,10 +154,15 @@ class QuotationLetterController extends Controller
             ->select('tbl_quotation_letter.*', 'tbl_customer.*')
             ->first();
         $item_id_quotation = DB::table('tbl_item_project')->where('id_quotation', '=', $id_quotation)->get();
-        return view('Web.Surat.types_of_letters.quotation.print', compact([
+        $pdf = FacadePdf::loadview('Web.Surat.types_of_letters.quotation.print', compact([
             'print_id_quotation',
             'item_id_quotation'
-        ]));
+        ]))->setPaper('A4', 'potrait');
+        return $pdf->download('Quotation Letter.pdf');
+        // return view('Web.Surat.types_of_letters.quotation.print', compact([
+        //     'print_id_quotation',
+        //     'item_id_quotation'
+        // ]));
     }
     /* JQUERY & JAVASCRIPT */
     public function getAutocompleteData(Request $request)

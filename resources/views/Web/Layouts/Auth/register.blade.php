@@ -7,31 +7,30 @@
             <div class="text-center">
                 <img src="frontend/img/Group 442.png" alt="#">
 
-                <h2 class="pt-5">Lets Get You Set Up</h2>
+                <h2 class="pt-5">Register</h2>
 
-                <p class="text-justify">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sapiente facere
-                    tempora voluptatibus
-                    laborum tenetur esse. Recusandae, est nobis. Nam et quod earum! Quae, quas? Facere sequi natus dicta
-                    illo tempora!</p>
+                <p class="center" style="font-size: 20px">Register Terdahulu Jika Anda Belum Memiliki Akun Alan Finance</p>
             </div>
         </div>
     </div>
     <div class="main">
         <div class="col-md-8 ml-auto mr-auto">
             <div class="login-form">
-                <form method="POST" action="{{ route('register') }}">
+                <form id="register">
                     @csrf
 
                     <div class="form-group row">
                         <label for="nama" class="col-sm-4 col-form-label" value="{{ old('name') }}">Nama</label>
                         <div class=" col-sm-8">
-                            <input type="nama" class="form-control" id="nama" value="{{ old('name') }}" name="name">
+                            <input type="nama" class="form-control" id="nama" value="{{ old('name') }}"
+                                name="name">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="email" class="col-sm-4 col-form-label">E-Mail</label>
                         <div class="col-sm-8">
-                            <input type="email" class="form-control" id="email" value="{{ old('email') }}" name="email">
+                            <input type="email" class="form-control" id="email" value="{{ old('email') }}"
+                                name="email">
                         </div>
                     </div>
 
@@ -57,7 +56,7 @@
                             </div>
 
 
-                            <button type="submit" onclick="register()" class="mx-auto tombol btn btn-black"
+                            <button type="button" class="mx-auto tombol btn btn-black"
                                 style="width: 180px;">{{ __('Register') }}
                                 Now</button>
                         </div>
@@ -102,37 +101,62 @@
     </div>
     <script src="frontend/css/sweetalert2/dist/sweetalert2.all.min.js"></script>
     <script>
-        function register() {
-
-            var nama = document.getElementById("nama").value;
+        $('.tombol').on('click', function() {
+            // console.log($(this).data('id'))
             var email = document.getElementById("email").value;
-            var pwd = document.getElementById("pwd").value;
+            var password = document.getElementById("pwd").value;
             var repwd = document.getElementById("repwd").value;
-
-            if (nama == '' || email == '' || pwd == '' || repwd == '') {
+            var nama = document.getElementById("nama").value;
+            var token = $("meta[name='csrf-token']").attr("content");
+            let FormData = $('#register').serialize()
+            if (email == '' || password == '' || nama == '' || repwd == '') {
                 Swal.fire({
-                    title: '<strong>Register Failed</u></strong>',
+                    title: '<strong>Login Failed</u></strong>',
                     icon: 'error',
-
                     showCloseButton: true,
                     focusConfirm: false,
                     confirmButtonText: ' Oke',
                 })
             } else {
-                Swal.fire({
-                    title: '<strong>Welcome</strong>',
-                    icon: 'success',
+                // AJAX
+                $.ajax({
+                    url: '{{ route('register') }}',
+                    method: "POST",
+                    data: FormData,
+                    success: function(data) {
+                        if (data.success) {
+                            Swal.fire({
+                                    title: '<strong>Login Succes</strong>',
+                                    icon: 'success',
+                                    timer: 3000,
+                                    focusConfirm: false,
+                                    showConfirmButton: false,
+                                })
+                                .then(function() {
+                                    window.location.href = "{{ route('index_dashboard') }}";
+                                });
 
-                    focusConfirm: false,
-                    confirmButtonText: ' Continue',
-
-
-                }).then(function() {
-                    // Redirect the user
-                    window.location.href = "dashboard";
-                    console.log('The Ok Button was clicked.');
+                        } else {
+                            Swal.fire({
+                                title: '<strong>Login Failed</u></strong>',
+                                icon: 'error',
+                                showCloseButton: true,
+                                focusConfirm: false,
+                                confirmButtonText: ' Oke',
+                            })
+                        }
+                    },
+                    error: function(error) {
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Opps!',
+                            timer: 3000,
+                            showConfirmButton: false,
+                            text: 'Nama,Email,Password & confirm password error, Tolong Check Kembali!'
+                        });
+                    }
                 })
             }
-        }
+        })
     </script>
 @endsection

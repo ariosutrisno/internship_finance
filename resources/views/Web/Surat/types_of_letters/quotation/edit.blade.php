@@ -41,7 +41,8 @@
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('quotationupdate', $quotation->id_quotation) }}" method="POST">
+                            <form action="{{ route('update_QuotationLetter', $item_id_quotation->id_quotation) }}"
+                                method="POST">
                                 @csrf
                                 @include('Web.Surat.types_of_letters.quotation.formEdit')
                                 <div class="float-md-right">
@@ -52,8 +53,6 @@
                             </form>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>

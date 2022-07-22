@@ -3,7 +3,7 @@
 @section('container')
     @include('Web.Layouts.css&js.css')
     @include('Web.Layouts.navbarapp.navbarapp')
-    <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron jumbotron-fluid" id="home">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -39,7 +39,7 @@
 
     <div class="container">
 
-        <div class="row justify-content-center " style="margin-top: 80px; margin-bottom: 80px;">
+        <div class="row justify-content-center " id="procedure" style="margin-top: 80px; margin-bottom: 80px;">
             <h2>Bagaimana Cara Kerjanya?</h2>
             <div class="col-lg-10 info-panel" style="margin-top: 50px;">
                 <div class="row">
@@ -107,7 +107,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-light">
+    <div class="container-fluid bg-light" id="features">
         <div class="row ">
             <div class="col-lg-4 mx-auto pt-5 ">
                 <h2 class="text-center font-weight-bold">Features</h2>
@@ -214,7 +214,7 @@
 
 
     <!-- Footer -->
-    <footer class="page-footer font-small bg-secondary darken-3">
+    <footer class="page-footer font-small bg-secondary darken-3"id="social-media">
 
         <!-- Footer Elements -->
         <div class="container">

@@ -6,24 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Print Offering</title>
-    {{-- <link rel="stylesheet" href="frontend/Print/print_quotation.css"> --}}
-    <link rel="stylesheet" href="{{ asset('frontend/Print/print_quotation.css') }}">
+    <link rel="stylesheet" href="frontend/Print/print_quotation.css">
+    {{-- <link rel="stylesheet" href="{{ asset('frontend/Print/print_quotation.css') }}"> --}}
 </head>
 
 <body>
     <header>
-        <img src="{{ asset('frontend/img/Kop-Surat-Alan-2020.png') }}" width="100%" alt="alan-kop">
-        {{-- <img src="frontend/img/Kop-Surat-Alan-2020.png" width="100%" alt="alan-kop"> --}}
+        {{-- <img src="{{ asset('frontend/img/Kop-Surat-Alan-2020.png') }}" width="100%" alt="alan-kop"> --}}
+        <img src="frontend/img/Kop-Surat-Alan-2020.png" width="100%" alt="alan-kop">
     </header>
     <div class="container-info">
         <table class="nav-info">
             <thead>
                 <tr>
                     <th class="th_info" colspan="2">
-                        <p class="p_info">Quotation</p>
+                        <p style="font-size: 25px">Quotation</p>
                     </th>
                     <th class="th_info" colspan="2">
-                        <p class="p_info">Alamat Tagihan</p>
+                        <p>Alamat Tagihan</p>
                     </th>
                 </tr>
             </thead>
@@ -62,7 +62,10 @@
                         <p>Jatuh Tempo</p>
                     </td>
                     <td class="td_info1">
-                        <p>: {{ \Carbon\Carbon::parse($print_id_quotation->tgl_jatuh_tempo)->locale('id')->isoformat('DD MMMM Y') }}
+                        <p>:
+                            <span
+                                style="font-weight:bold;">{{ \Carbon\Carbon::parse($print_id_quotation->tgl_jatuh_tempo)->locale('id')->isoformat('DD MMMM Y') }}
+                            </span>
                         </p>
                     </td>
                     <td class="td_info">
@@ -77,7 +80,7 @@
                         <p>Perihal</p>
                     </td>
                     <td class="td_info1">
-                        <p>:{{ $print_id_quotation->perihal }}</p>
+                        <p>: {{ $print_id_quotation->perihal }}</p>
                     </td>
                     <td class="td_info">
                         <p>Kontak</p>
@@ -90,8 +93,10 @@
                     <td class="td_info">
                         <p>Status</p>
                     </td>
-                    <td class="td_info">
-                        <p>: Unpaid</p>
+                    <td class="td_info1" colspan="3">
+                        <p>:
+                            <span style="color: red;font-weight:bold;">Unpaid</span>
+                        </p>
                     </td>
                 </tr>
             </tbody>
@@ -101,13 +106,13 @@
         <table class="nav-info_project">
             <thead>
                 <tr>
-                    <th class="th_info_project">
+                    <th class="th_info_project_number">
                         <p class="p_info_project_th">NO</p>
                     </th>
-                    <th class="th_info_project">
+                    <th class="th_info_project_nama">
                         <p class="p_info_project_th">NAMA PROJECT</p>
                     </th>
-                    <th class="th_info_project">
+                    <th class="th_info_project_biaya">
                         <p class="p_info_project_th"> BIAYA</p>
                     </th>
                 </tr>
@@ -116,13 +121,13 @@
                 <?php $i = 0; ?>
                 @foreach ($item_id_quotation as $item)
                     <tr>
-                        <td class="td_info_project">
+                        <td class="td_info_project_item1">
                             <p class="p_info_project_number">{{ ++$i }}</p>
                         </td>
-                        <td class="td_info_project">
+                        <td class="td_info_project_item2">
                             <p class="p_info_project_name">{{ $item->nama_project }}</p>
                         </td>
-                        <td class="td_info_project">
+                        <td class="td_info_project_item3">
                             <p class="p_info_project_biaya">@currency($item->biaya_project)</p>
                         </td>
                     </tr>
@@ -133,19 +138,18 @@
                 $e = $d + $c;
                 ?>
                 <tr>
-                <tr>
-                    <td class="td_info_project1" colspan="2">
+                    <td class="td_info_project_ppn" colspan="2">
                         <p class="p_info_project1">PPN(10%)</p>
                     </td>
-                    <td class="td_info_project">
+                    <td class="td_info_project1">
                         <p class="p_info_project_biaya">@currency($print_id_quotation->pembayaran)</p>
                     </td>
                 </tr>
                 <tr>
-                    <td class="td_info_project2" colspan="2">
+                    <td class="td_info_project_ttlBiaya" colspan="2">
                         <p class="p_info_project2">Total Biaya Project</p>
                     </td>
-                    <td class="td_info_project" colspan="2">
+                    <td class="td_info_project2">
                         <p class="p_info_project_biaya"> @currency($e)</p>
                     </td>
                 </tr>
@@ -197,8 +201,8 @@
         </table>
     </div>
     <footer>
-        {{-- <img src="frontend/img/Kopsurat_footer_2020.jpg" alt="footer" width='100%'> --}}
-        <img src="{{ asset('frontend/img/Kopsurat_footer_2020.jpg') }}" alt="alan-footer" width='100%'>
+        <img src="frontend/img/Kopsurat_footer_2020.jpg" alt="footer" width='100%'>
+        {{-- <img src="{{ asset('frontend/img/Kopsurat_footer_2020.jpg') }}" alt="alan-footer" width='100%'> --}}
     </footer>
     <script>
         window.print();
