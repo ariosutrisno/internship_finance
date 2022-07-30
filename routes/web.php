@@ -113,6 +113,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('index', 'Web\InvoiceLetterController@index_InvoiceLetter')->name('index_InvoiceLetter');
             Route::get('create', 'Web\InvoiceLetterController@create_InvoiceLetter')->name('create_InvoiceLetter');
             Route::post('create/save', 'Web\InvoiceLetterController@save_InvoiceLetter')->name('save_InvoiceLetter');
+            Route::get('/{id_invoice}', 'Web\InvoiceLetterController@jquerycreate')->name('invoicejquerycreate');
             Route::get('{id_invoice}/view', 'Web\InvoiceLetterController@view_InvoiceLetter')->name('view_InvoiceLetter');
             Route::get('{id_invoice}/update', 'Web\InvoiceLetterController@update_InvoiceLetter')->name('update_InvoiceLetter');
             Route::get('{id_invoice}/delete', 'Web\InvoiceLetterController@delete_InvoiceLetter')->name('delete_InvoiceLetter');

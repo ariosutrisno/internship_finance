@@ -6,21 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Print Offering</title>
-    {{-- <link rel="stylesheet" href="frontend/Print/print_quotation.css"> --}}
-    <link rel="stylesheet" href="{{ asset('frontend/Print/print_invoice.css') }}">
+    <link rel="stylesheet" href="frontend/Print/print_invoice.css">
+    {{-- <link rel="stylesheet" href="{{ asset('frontend/Print/print_invoice.css') }}"> --}}
 </head>
 
 <body>
     <header>
-        <img src="{{ asset('frontend/img/Kop-Surat-Alan-2020.png') }}" width="100%" alt="alan-kop">
-        {{-- <img src="frontend/img/Kop-Surat-Alan-2020.png" width="100%" alt="alan-kop"> --}}
+        {{-- <img src="{{ asset('frontend/img/Kop-Surat-Alan-2020.png') }}" width="100%" alt="alan-kop"> --}}
+        <img src="frontend/img/Kop-Surat-Alan-2020.png" width="100%" alt="alan-kop">
     </header>
     <div class="container-info">
         <table class="nav-info">
             <thead>
                 <tr>
                     <th class="th_info" colspan="2">
-                        <p class="p_info">Invoice</p>
+                        <p class="p_info1">Invoice</p>
                     </th>
                     <th class="th_info" colspan="2">
                         <p class="p_info">Alamat Tagihan</p>
@@ -29,13 +29,13 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="td_info">
+                    <td class="td_info" id="td_info">
                         <p>No.Invoice</p>
                     </td>
                     <td class="td_info1">
                         <p>: {{ $print_id_invoice->nomor_surat }}</p>
                     </td>
-                    <td class="td_info">
+                    <td class="td_info" id="td_info1">
                         <p>Nama</p>
                     </td>
                     <td class="td_info2">
@@ -43,13 +43,17 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="td_info">
+                    <td class="td_info" id="td_info">
                         <p>Tanggal Invoice</p>
                     </td>
                     <td class="td_info1">
-                        <p>: {{ $print_id_invoice->created_at }}</p>
+                        <span>:
+                            <span>
+                                {{ \Carbon\Carbon::parse($print_id_invoice->created_at)->locale('id')->isoformat('DD MMMM Y') }}
+                            </span>
+                        </span>
                     </td>
-                    <td class="td_info">
+                    <td class="td_info" id="td_info1">
                         <p>Instansi</p>
                     </td>
                     <td class="td_info2">
@@ -57,27 +61,31 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="td_info">
+                    <td class="td_info" id="td_info">
                         <p>Jatuh Tempo</p>
                     </td>
                     <td class="td_info1">
-                        <p>: {{ $print_id_invoice->jatuh_tempo_invoice }}</p>
+                        <span>:
+                            <span style="font-weight: bold;">
+                                {{ \Carbon\Carbon::parse($print_id_invoice->jatuh_tempo_invoice)->locale('id')->isoformat('DD MMMM Y') }}
+                            </span>
+                        </span>
                     </td>
-                    <td class="td_info">
+                    <td class="td_info" id="td_info1">
                         <p>Alamat Instansi</p>
                     </td>
                     <td class="td_info2">
-                        <p>: {{ $print_id_invoice->address_company_customer }}</p>
+                        <span>: {{ $print_id_invoice->address_company_customer }}</span>
                     </td>
                 </tr>
                 <tr>
-                    <td class="td_info">
+                    <td class="td_info" id="td_info">
                         <p>Perihal</p>
                     </td>
                     <td class="td_info1">
-                        <p>:{{ $print_id_invoice->perihal }}</p>
+                        <p>: {{ ucwords($print_id_invoice->perihal) }}</p>
                     </td>
-                    <td class="td_info">
+                    <td class="td_info" id="td_info1">
                         <p>Kontak</p>
                     </td>
                     <td class="td_info2">
@@ -85,11 +93,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="td_info">
+                    <td class="td_info" id="td_info">
                         <p>Status</p>
                     </td>
-                    <td class="td_info">
-                        <p>: Unpaid</p>
+                    <td colspan="3" class="td_info">
+                        <span>
+                            : <span style="color: red;font-weight:bold">Unpaid</span>
+                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -105,7 +115,7 @@
                     <th class="th_info_project">
                         <p class="p_info_project_th">NAMA PROJECT</p>
                     </th>
-                    <th class="th_info_project">
+                    <th class="th_info_project" colspan="2">
                         <p class="p_info_project_th"> BIAYA</p>
                     </th>
                 </tr>
@@ -120,7 +130,7 @@
                         <td class="td_info_project">
                             <p class="p_info_project_name">{{ $item->nama_project }}</p>
                         </td>
-                        <td class="td_info_project">
+                        <td class="td_info_project" colspan="2">
                             <p class="p_info_project_biaya">@currency($item->biaya_project)</p>
                         </td>
                     </tr>
@@ -134,7 +144,7 @@
                     <td class="td_info_project1" colspan="2">
                         <p class="p_info_project1">Sub Total</p>
                     </td>
-                    <td class="td_info_project">
+                    <td class="td_info_project" colspan="2">
                         <p class="p_info_project_biaya">@currency($print_id_invoice->pembayaran)</p>
                     </td>
                 </tr>
@@ -230,8 +240,8 @@
         </table>
     </div>
     <footer>
-        {{-- <img src="frontend/img/Kopsurat_footer_2020.jpg" alt="footer" width='100%'> --}}
-        <img src="{{ asset('frontend/img/Kopsurat_footer_2020.jpg') }}" alt="alan-footer" width='100%'>
+        <img src="frontend/img/Kopsurat_footer_2020.jpg" alt="footer" width='100%'>
+        {{-- <img src="{{ asset('frontend/img/Kopsurat_footer_2020.jpg') }}" alt="alan-footer" width='100%'> --}}
     </footer>
     <script>
         window.print();

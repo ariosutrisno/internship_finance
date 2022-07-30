@@ -82,6 +82,11 @@
                             </div>
                         </div>
                         <div class="container bg-white p-3 mb-5" style="height: 100%;">
+                            @if (session()->has('success'))
+                                <div class="alert alert-success text-center" role="alert">
+                                    {{ session()->get('success') }}
+                                </div>
+                            @endif
                             <div class="table-responsive mt-4 mb-5 ">
                                 @if (count($all_request_invoice) !== 0)
                                     <table class="table  table-bordered table-sm" id="coba">
@@ -110,10 +115,10 @@
                                                     <td class="text-center">@currency($datas->pembayaran)</td>
                                                     <td class="text-center">
 
-                                                        <a href="{{ url('/invoice/' . $datas->id_invoice . '/edit') }}"
+                                                        <a href="{{ url('/letter/invoice-letter/' . $datas->id_invoice . '/view/') }}"
                                                             class="ml-auto mr-1"><img
                                                                 src="{{ asset('frontend/img/edit.png') }}"></a>
-                                                        <a href="{{ url('/invoice/' . $datas->id_invoice . '/delete/') }}"
+                                                        <a href="{{ url('/letter/invoice-letter/' . $datas->id_invoice . '/delete/') }}"
                                                             class="mr-auto ml-1"><img
                                                                 src="{{ asset('frontend/img/delete-button.png') }}"></a>
                                                         <a href="{{ url('/letter/invoice-letter/' . $datas->id_invoice . '/print/') }}"

@@ -30,27 +30,19 @@
         margin-left: 10%;
         margin-right: 10%;
     }
-    table.nav-info, th.th_info,td.td_info,td.td_info1,td.td_info2{
+    table.nav-info,th.th_info,td.td_info,td.td_info1,td.td_info2{
         /* border:1px solid black;
         border-collapse: collapse; */
-    }
-    table.nav-info{
         width: 100%;
     }
-    th.th_info{
-        width:0;
+    td#td_info{
+        width: 60%;
     }
-    td.td_info{
-        width: 20%;
+    td#td_info1{
+        width: 60%;
     }
-    td.td_info1{
-        width: 40%;
-    }
-    td.td_info2{
-        width: 100%;
-    }
-    p.p_info{
-        text-align: justify;
+    p.p_info1{
+        font-size: 20px;
     }
     /* container-info end */
     /* container-info_project */

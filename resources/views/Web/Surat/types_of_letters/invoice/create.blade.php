@@ -41,11 +41,13 @@
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('save_InvoiceLetter') }}" method="POST">
+                            <form action="{{ route('save_InvoiceLetter') }}" method="POST" onsubmit="return validateForm()"
+                                name="myForm">
                                 @csrf
                                 @include('Web.Surat.types_of_letters.invoice.form')
                                 <div class="float-right">
-                                    <a href="{{ route('index_InvoiceLetter') }}" class="btn  tombol btn-danger  ml-5">Cancel</a>
+                                    <a href="{{ route('index_InvoiceLetter') }}"
+                                        class="btn  tombol btn-danger  ml-5">Cancel</a>
                                     <button type="submit" class="btn tombol bg-purple  btn-primary ">Buat</button>
                                 </div>
                             </form>
@@ -69,9 +71,9 @@
                 total += gg;
                 wajibpajak = parseFloat(total) * parseFloat(ppn);
                 seluruh = parseInt(total) + parseInt(wajibpajak);
-                console.log('keseluruhan:', seluruh)
-                console.log('pajak:', wajibpajak);
-                console.log('subtotal:', total);
+                // console.log('keseluruhan:', seluruh)
+                // console.log('pajak:', wajibpajak);
+                // console.log('subtotal:', total);
             })
             $('#subtotal').val(total)
             $('#total').val(seluruh)
@@ -79,7 +81,7 @@
 
         $('select').on('change', function() {
             var terpilih = this.value;
-            console.log(terpilih);
+            // console.log(terpilih);
             if (terpilih == 'excelent') {
                 console.log('ini excelent pembayaran excelent');
                 $('.coba').remove();
@@ -98,10 +100,10 @@
                 $('.coba').remove();
                 p = $('.tambah').append(
                     '<div class="coba"> <div class="form-group row"><label for="Term" class="col-sm-4   col-form-label">Term I <span id="termin"></span></label> <div class="col-sm-8"><input type="text" readonly class="form-control" id="inputterminhight" name="terminhigh[]" value=""> </div>     </div>'
-                    );
+                );
                 $('.hiddengg').append(
                     '<div class="coba"> <div class="form-group row dd"> <label for="dp" id="dptext" class="col-sm-4 col-form-label">DP</label>       <div class="col-sm-8    ">  <input type="text" class="form-control" id="dp" name="dphigh" readonly>   </div></div>  </div>'
-                    );
+                );
                 fromdp = $('#dp').val(dpwajib);
                 $('#inputterminhight').val(terminpt)
                 console.log('ini high pembayaran, Dp Wajib =', dpwajib);
@@ -119,10 +121,10 @@
                 // Add new Termin
                 p = $('.tambah').append(
                     '<div class="coba"> <div class="form-group row"><label for="Term" class="col-sm-4   col-form-label">Term I <span id="termin"></span></label> <div class="col-sm-8"><input type="text" readonly class="form-control" id="inputtermin1" name="terminmedium[]" value=""><br>  </div><label for="Term" class="col-sm-4   col-form-label">Term II<span id="termin"></span></label> <div class="col-sm-8"> <input type="text" readonly class="form-control" id="inputtermin2" name="terminmedium[]" value="">   </div>   </div>  </div>'
-                    );
+                );
                 $('.hiddengg').append(
                     '<div class="coba"> <div class="form-group row dd"> <label for="dp" id="dptext" class="col-sm-4 col-form-label">DP</label>       <div class="col-sm-8 ">  <input type="text" class="form-control" id="dp" name="dpmedium" readonly>   </div></div>  </div>'
-                    );
+                );
                 $('#inputtermin1').val(term1jml);
                 $('#inputtermin2').val(term1jm2);
                 $('#dptext').text("DP");
@@ -141,10 +143,10 @@
                 $('.coba').remove();
                 $('.standar').append(
                     '  <div class="coba"><label for="Jt">Jumlah Termin</label>   <input type="number" min="0" class="form-control" onchange="coba()" id="Jt" name="jt[]"></input>  </div>'
-                    );
+                );
                 $('.hiddengg').append(
                     '<div class="coba"> <div class="form-group row dd"> <label for="dp" id="dptext" class="col-sm-4 col-form-label">DP</label>    <div class="col-sm-8    ">  <input type="text" class="form-control" id="dp" name="dpstandar" readonly>   </div></div>  </div>'
-                    );
+                );
                 $('#dptext').text("DP");
                 // $('#inputtermin').val(hasiltermin);
                 console.log('ini pembayaran standar, Dp Wajib =', dpwajib)
@@ -200,8 +202,8 @@
                 if (x < max_fields) {
                     x++;
                     $(wrapper).append(
-                        `<tr class="table-white "><td class="text-right"> <input type="text" class="form-control" id="np" placeholder="Nama Proyek" name="np[]"></input></td><td class="text-right gini"><input type="text" class="form-control cp" id="cp"     placeholder="Biaya Proyek" name="cp[]"    ></input></td><td class="text-center"><a href="#"  id="delete"class="delete btn btn-danger tombol">Delete</a></td></tr>`
-                        );
+                        `<tr class="table-white "><td class="text-right"> <input type="text" class="form-control " id="np" placeholder="Nama Proyek" name="np[]" ></input></td><td class="text-right gini"><input type="text" class="form-control cp" id="cp"     placeholder="Biaya Proyek" name="cp[]"    ></input></td><td class="text-center"><a href="#"  id="delete"class="delete btn btn-danger tombol">Delete</a></td></tr>`
+                    );
                     //add input box
                     document.getElementById("delete").setAttribute("style", "display: block;")
                 } else {
@@ -238,7 +240,7 @@
                 })
                 $('#subtotal').val(total)
                 $('#total').val(seluruh)
-                console.log(x);
+                // console.log(x);
 
             })
         });
@@ -247,26 +249,55 @@
         // FORM QUOTATION 
         function fetch_customer_data(query = '') {
             $.ajax({
-                url: `/create-invoice/${query}`,
+                url: `/letter/invoice-letter/${query}`,
                 method: 'GET',
                 data: {
                     query: query,
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
-                    console.log(data)
-                    var email = $("#email").val(data.pelanggan_email)
-                    var perusahaan = $("#perusahaan").val(data.perusahaan)
-                    var telepon = $("#telepon").val(data.pelanggan_telepon)
-
+                    var email = $("#email").val(data.email_customer)
+                    var perusahaan = $("#perusahaan").val(data.company_customer)
+                    var telepon = $("#telepon").val(data.phone_customer)
                 }
             });
         }
 
         function onSelect() {
             var query = document.getElementById("nama").value;
-            console.log(query)
             setInterval(fetch_customer_data(query), 5000);
         }
+    </script>
+    <script>
+        /* SCRIPT HIDDEN FORM TABLE INPUT */
+        function validateForm() {
+            var x = document.forms["myForm"]["np1"].value;
+            var y = document.forms["myForm"]["cp1"].value;
+            if (x == "") {
+                $('#np1').css('border-color', 'red');
+                $('.text-row1').css('display', 'block')
+                if (y == "") {
+                    $('#cp1').css('border-color', 'red');
+                    $('.text-row2').css('display', 'block')
+                    return false
+                }
+                return false
+            }
+            if (y == "") {
+                $('#cp1').css('border-color', 'red');
+                $('.text-row2').css('display', 'block')
+                return false
+            }
+        }
+
+        function changevalue() {
+            var np = document.getElementById('np1').value;
+            var npchange = np.split(".").join("").split(" ").join("");
+            document.getElementById('np').value = npchange;
+            var cp = document.getElementById('cp1').value;
+            var cpchange = cp.split(".").join("").split(" ").join("");
+            document.getElementById('cp').value = cpchange;
+        }
+        /* SCRIPT HIDDEN FORM TABLE INPUT END */
     </script>
 @endsection

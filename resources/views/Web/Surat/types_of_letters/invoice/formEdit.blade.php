@@ -1,13 +1,13 @@
 <div class="form-row" id="hiddenNosurat">
     <div class="form-group col-md-6">
         <label for="inputAddress">No Surat</label>
-        <input id="txt1" type="text" class="form-control" id="inputAddress" placeholder="" name="nosurat"
-            value="{{ $invoice->nomor_surat }}" readonly></input>
+        <input id="txt1" type="text" class="form-control" id="inputAddress" placeholder="" name="nomor_surat"
+            value="{{ $id_invoice_letter->nomor_surat }}" readonly>
     </div>
     <div class="form-group col-md-6">
         <label for="perihal">Perihal</label>
         <input id="txt1" type="text" class="form-control" id="perihal" placeholder="" name="perihal"
-            value="{{ $invoice->perihal }}"></input>
+            value="{{ $id_invoice_letter->perihal }}">
     </div>
 </div>
 <div class="form-row">
@@ -15,12 +15,12 @@
         <label for="nama">Nama Pelanggan</label>
         {{-- <input type="text" class="form-control" id="nama" placeholder="Nama" name="name" value="{{ old('name') }}"> --}}
         <select data-placeholder="Nama" data-allow-clear="1" class="form-control" name="name" id="nama"
-            onchange="onSelect()" value="{{ $pelanggan->idx_pelanggan }}">
-            <option value="{{ $pelanggan->idx_pelanggan }}">{{ $pelanggan->pelanggan_nama }}</option>
-            @if (count($daftar_pelanggan) !== 0)
-                @foreach ($daftar_pelanggan as $pelanggans)
-                    @if ($pelanggans->idx_pelanggan !== $pelanggan->idx_pelanggan)
-                        <option value="{{ $pelanggans->idx_pelanggan }}">{{ $pelanggans->pelanggan_nama }}</option>
+            onchange="onSelect()" value="{{ $id_invoice_letter->id_customer }}">
+            <option value="{{ $id_invoice_letter->id_customer }}">{{ $id_invoice_letter->name_customer }}</option>
+            @if (count($customer) !== 0)
+                @foreach ($customer as $pelanggans)
+                    @if ($pelanggans->id_customer !== $id_invoice_letter->id_customer)
+                        <option value="{{ $pelanggans->id_customer }}">{{ $pelanggans->name_customer }}</option>
                     @endif
                 @endforeach
             @else
@@ -31,31 +31,31 @@
     <div class="form-group col-md-6">
         <label for="email">Email</label>
         <input type="email" class="form-control" id="email" placeholder="email" name="email"
-            value="{{ $pelanggan->pelanggan_email }}">
+            value="{{ $id_invoice_letter->email_customer }}" readonly>
     </div>
 </div>
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="perusahaan">Perusahaan</label>
         <input type="text" class="form-control" id="perusahaan" placeholder="Perusahaan" name="perusahaan"
-            value="{{ $pelanggan->perusahaan }}"></input>
+            value="{{ $id_invoice_letter->company_customer }}" readonly>
     </div>
     <div class="form-group col-md-6">
         <label for="telepon">Telepon</label>
         <input type="text" class="form-control" id="telepon" placeholder="Telepon" name="telepon"
-            value="{{ $pelanggan->pelanggan_telepon }}"></input>
+            value="{{ $id_invoice_letter->phone_customer }}" readonly>
     </div>
 </div>
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="dikirim">Tanggal Dikirim</label>
         <input type="date" class="form-control" id="dikirim" name="dikirim"
-            value="{{ $invoice->tanggal_invoice }}">
+            value="{{ \Carbon\Carbon::parse($id_invoice_letter->created_at)->format('Y-m-d') }}">
     </div>
     <div class="form-group col-md-6">
         <label for="tempo">Tanggal Jatuh Tempo</label>
         <input type="date" class="form-control" id="tempo" name="tempo"
-            value="{{ $invoice->jatuh_tempo_invoice }}"></input>
+            value="{{ \Carbon\Carbon::parse($id_invoice_letter->jatuh_tempo_invoice)->format('Y-m-d') }}">
     </div>
 </div>
 <div class="container-fluid" style="margin:0 !important;padding:0 !important;">
@@ -73,11 +73,11 @@
                 @foreach ($item_project as $item)
                     <tr class="table-white ">
                         <td class="text-right"> <input type="text" class="form-control np" id="np"
-                                value="{{ $item->nama_project }}" placeholder="Nama Proyek" name="np[]"></input>
+                                value="{{ $item->nama_project }}" placeholder="Nama Proyek" name="np[]">
                         </td>
                         <td class="text-right gini"><input type="text" class="form-control cp"
                                 value="{{ $item->biaya_project }}" id="cp" placeholder="Biaya Proyek"
-                                name="cp[]"></input></td>
+                                name="cp[]"></td>
                         <td class="text-center"><a href="#" class="delete  btn btn-danger tombol"
                                 id="delete">Delete</a></td>
                     </tr>
@@ -99,7 +99,7 @@
             <option value="high" @if ($term->standar_pembayaran == 'high') selected @endif>High</option>
             <option value="excelent"@if ($term->standar_pembayaran == 'excelent') selected @endif>Excelent</option>
         </select>
-        {{-- <input type="text" class="form-control" id="kategori" placeholder="Perusahaan" name="sp"></input> --}}
+        {{-- <input type="text" class="form-control" id="kategori" placeholder="Perusahaan" name="sp"> --}}
     </div>
     <div class=" col-md-6">
         <div class="row ">
@@ -129,7 +129,7 @@
     <div class="col-md-6">
         <div class="form-group">
             <label for="catatan">Catatan :</label>
-            <textarea class="form-control" name="catatan">{{ $invoice->keterangan }} </textarea>
+            <textarea class="form-control" name="catatan">{{ $id_invoice_letter->catatan_keterangan }} </textarea>
         </div>
     </div>
     <div class="col-md-6 mt-2 dd">
@@ -141,7 +141,7 @@
             <label for="dp" class="col-sm-4 col-form-label">Sub Total</label>
             <div class="col-sm-8">
                 <input type="text" class="form-control" id="subtotal" name="jumlah"
-                    value="{{ $invoice->jumlah_tagihan }}" readonly>
+                    value="{{ $id_invoice_letter->pembayaran }}" readonly>
             </div>
         </div>
         <div class="form-group row">

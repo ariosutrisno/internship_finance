@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class InvoiceLetterController extends Controller
 {
@@ -37,27 +38,45 @@ class InvoiceLetterController extends Controller
     }
     public function save_InvoiceLetter(Request $request)
     {
+        $request->validate(
+            [
+                'id_customer' => 'required',
+                'sp' => 'required',
+                'perihal' => 'required',
+                'catatan' => 'required',
+                'dikirim' => 'required|date_format:Y-m-d',
+                'tempo' => 'required|date_format:Y-m-d',
+            ],
+            [
+                'perihal.required' => 'Isi Input Perihal Ini.',
+                'catatan.required' => 'Tuliskan Catatan Tersebut',
+                'id_customer.required' => 'Silahkan pilih satu nama customer',
+                'dikirim.required' => 'Isi Tanggal Dikirim',
+                'tempo.required' => 'Isi Tanggal Jatuh Tempo',
+                'sp.required' => 'Pilih Salah Satu',
+            ]
+        );
         DB::table('tbl_invoice')->insert([
             'id_users' => $this->auth(),
             'id_customer' => $request->id_customer,
-            'created_at' => date('Y-m-d H:i:s', strtotime($request->created_at . date('H:i:s'))),
-            'jatuh_tempo_invoice' => date('Y-m-d H:i:s', strtotime($request->jatuh_tempo_invoice . date('H:i:s'))),
+            'created_at' => date('Y-m-d H:i:s', strtotime($request->dikirim . date('H:i:s'))),
+            'jatuh_tempo_invoice' => date('Y-m-d H:i:s', strtotime($request->tempo . date('H:i:s'))),
             'nomor_surat' => $request->nomor_surat,
             'perihal' => $request->perihal,
-            'catatan_keterangan' => $request->catatan_keterangan,
+            'catatan_keterangan' => $request->catatan,
             'pembayaran' => $request->pembayaran,
         ]);
         $id_invoice = DB::getPdo()->lastInsertId();
         if (count($request['np'])) {
             # code...
             foreach ($request['np'] as $key => $value) {
-                # code...
+                # code...   
                 $request2 = array(
                     'id_invoice' => $id_invoice,
                     'nama_project' => $request['np'][$key],
                     'biaya_project' => $request['cp'][$key],
                 );
-                DB::table('tbl_item_project')->create($request2);
+                DB::table('tbl_item_project')->insert($request2);
             }
         }
         if ($request['sp'] == 'standar') {
@@ -70,7 +89,7 @@ class InvoiceLetterController extends Controller
                     'Dp' => $request['dpstandar'],
                     'term' => $request['terminstandar'][$key],
                 );
-                DB::table('tbl_term')->create($request3);
+                DB::table('tbl_term')->insert($request3);
             }
         }
         if ($request['sp'] == 'medium') {
@@ -83,7 +102,7 @@ class InvoiceLetterController extends Controller
                     'Dp' => $request['dpmedium'],
                     'term' => $request['terminmedium'][$medium],
                 );
-                DB::table('tbl_term')->create($request4);
+                DB::table('tbl_term')->insert($request4);
             }
         }
         if ($request['sp'] == 'high') {
@@ -96,17 +115,17 @@ class InvoiceLetterController extends Controller
                     'Dp' => $request['dphigh'],
                     'term' => $request['terminhigh'][$high],
                 );
-                DB::table('tbl_term')->create($request5);
+                DB::table('tbl_term')->insert($request5);
             }
         }
-        return redirect()->route('index_InvoiceLetter');
+        return redirect()->route('index_InvoiceLetter')->with('success', 'Data Telah Ditambahkan');
     }
     public function view_InvoiceLetter($id_invoice)
     {
 
         $id_invoice_letter = DB::table('tbl_invoice')->where('tbl_invoice.id_users', '=', $this->auth())->where('tbl_invoice.id_invoice', '=', $id_invoice)
-            ->join('tbl_customer', 'tbl_quotation_letter.id_customer', '=', 'tbl_customer.id_customer')
-            ->select('tbl_quotation_letter.*', 'tbl_customer.id_customer', 'tbl_customer.name_customer')
+            ->join('tbl_customer', 'tbl_invoice.id_customer', '=', 'tbl_customer.id_customer')
+            ->select('tbl_invoice.*', 'tbl_customer.*',)
             ->first();
         $customer = DB::table('tbl_customer')->get();
         $term = DB::table('tbl_term')->where('id_invoice', '=', $id_invoice)->first();
@@ -114,7 +133,7 @@ class InvoiceLetterController extends Controller
         $ppn = $jtagihan * 0.1;
         $total = $jtagihan + $ppn;
         $termget = DB::table('tbl_term')->where('id_invoice', '=', $id_invoice)->get();
-        $item_project = DB::table('tbl_item_project')->where('id_invoice', '=', $id_invoice)->first();
+        $item_project = DB::table('tbl_item_project')->where('id_invoice', '=', $id_invoice)->get();
         $termin = json_encode($term);
         return view('Web.Surat.types_of_letters.invoice.edit', compact([
             'id_invoice_letter',
@@ -122,12 +141,94 @@ class InvoiceLetterController extends Controller
             'total',
             'termget',
             'termin',
-            'item_project'
+            'item_project',
+            'term'
         ]));
     }
     public function update_InvoiceLetter(Request $request, $id_invoice)
     {
-        DB::table('tbl_invoice')->where('id_invoice', '=', $id_invoice)->update([]);
+        $request->validate(
+            [
+                'id_customer' => 'required',
+                'sp' => 'required',
+                'perihal' => 'required',
+                'catatan' => 'required',
+                'dikirim' => 'required|date_format:Y-m-d',
+                'tempo' => 'required|date_format:Y-m-d',
+            ],
+            [
+                'perihal.required' => 'Isi Input Perihal Ini.',
+                'catatan.required' => 'Tuliskan Catatan Tersebut',
+                'id_customer.required' => 'Silahkan pilih satu nama customer',
+                'dikirim.required' => 'Isi Tanggal Dikirim',
+                'tempo.required' => 'Isi Tanggal Jatuh Tempo',
+                'sp.required' => 'Pilih Salah Satu',
+            ]
+        );
+        DB::table('tbl_invoice')->where('id_invoice', '=', $id_invoice)->update([
+            'id_customer' => $request->id_customer,
+            'created_at' => date('Y-m-d H:i:s', strtotime($request->created_at . date('H:i:s'))),
+            'jatuh_tempo_invoice' => date('Y-m-d H:i:s', strtotime($request->jatuh_tempo_invoice . date('H:i:s'))),
+            'nomor_surat' => $request->nomor_surat,
+            'perihal' => $request->perihal,
+            'catatan_keterangan' => $request->catatan_keterangan,
+            'pembayaran' => $request->pembayaran,
+        ]);
+        if (count($request['np'])) {
+            # code...
+            DB::table('tbl_item_project')->where('id_invoice', '=', $id_invoice)->delete();
+            foreach ($request['np'] as $key => $value) {
+                # code...   
+                $request2 = array(
+                    'id_invoice' => $id_invoice,
+                    'nama_project' => $request['np'][$key],
+                    'biaya_project' => $request['cp'][$key],
+                );
+                DB::table('tbl_item_project')->insert($request2);
+            }
+        }
+        if ($request['sp'] == 'standar') {
+            # code...
+            DB::table('tbl_term')->where('id_invoice', '=', $id_invoice)->delete();
+            foreach ($request['terminstandar'] as $key => $value) {
+                # code...
+                $request3 = array(
+                    'id_invoice' => $id_invoice,
+                    'standar_pembayaran' => $request['sp'],
+                    'Dp' => $request['dpstandar'],
+                    'term' => $request['terminstandar'][$key],
+                );
+                DB::table('tbl_term')->insert($request3);
+            }
+        }
+        if ($request['sp'] == 'medium') {
+            # code...
+            DB::table('tbl_term')->where('id_invoice', '=', $id_invoice)->delete();
+            foreach ($request['terminmedium'] as $medium => $value) {
+                # code...
+                $request4 =  array(
+                    'id_invoice' => $id_invoice,
+                    'standar_pembayaran' => $request['sp'],
+                    'Dp' => $request['dpmedium'],
+                    'term' => $request['terminmedium'][$medium],
+                );
+                DB::table('tbl_term')->insert($request4);
+            }
+        }
+        if ($request['sp'] == 'high') {
+            # code...
+            DB::table('tbl_term')->where('id_invoice', '=', $id_invoice)->delete();
+            foreach ($request['terminhigh'] as $high => $value) {
+                # code...
+                $request5 = array(
+                    'id_invoice' => $id_invoice,
+                    'standar_pembayaran' => $request['sp'],
+                    'Dp' => $request['dphigh'],
+                    'term' => $request['terminhigh'][$high],
+                );
+                DB::table('tbl_term')->insert($request5);
+            }
+        }
         return redirect()->route('index_InvoiceLetter');
     }
     public function delete_InvoiceLetter($id_invoice)
@@ -151,12 +252,19 @@ class InvoiceLetterController extends Controller
             $termin = $this->KonDecRomawi($i + 1);
             $term[$i]->termin = $termin;
         }
-        return view('Web.Surat.types_of_letters.invoice.print', compact([
+        $pdf = FacadePdf::loadview('Web.Surat.types_of_letters.invoice.print', compact([
             'print_id_invoice',
             'item_project',
             'term',
             'term1'
-        ]));
+        ]))->setPaper('A4', 'potrait');
+        return $pdf->download('Invoice.pdf');
+        // return view('Web.Surat.types_of_letters.invoice.print', compact([
+        //     'print_id_invoice',
+        //     'item_project',
+        //     'term',
+        //     'term1'
+        // ]));
     }
     function KonDecRomawi($angka)
     {
@@ -240,4 +348,17 @@ class InvoiceLetterController extends Controller
 
         return ($hsl);
     }
+    /* JQUERY & JAVASCRIPT */
+    public function getAutocompleteData(Request $request)
+    {
+        if ($request->has('term')) {
+            return DB::table('tbl_customer')->where('name_customer', 'like', '%' . $request->input('term') . '%')->get();
+        }
+    }
+    public function jquerycreate($id_quotation)
+    {
+        $daftar_pelanggan = DB::table('tbl_customer')->where('id_customer', '=', $id_quotation)->first();
+        return response()->json($daftar_pelanggan);
+    }
+    /* JQUERY & JAVASCRIPT */
 }
