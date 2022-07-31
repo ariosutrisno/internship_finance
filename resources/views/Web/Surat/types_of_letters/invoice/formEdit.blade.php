@@ -13,9 +13,8 @@
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="nama">Nama Pelanggan</label>
-        {{-- <input type="text" class="form-control" id="nama" placeholder="Nama" name="name" value="{{ old('name') }}"> --}}
-        <select data-placeholder="Nama" data-allow-clear="1" class="form-control" name="name" id="nama"
-            onchange="onSelect()" value="{{ $id_invoice_letter->id_customer }}">
+        <select data-placeholder="Nama" data-allow-clear="1" class="form-control" name="id_customer"
+            id="nama"value="{{ $id_invoice_letter->id_customer }}">
             <option value="{{ $id_invoice_letter->id_customer }}">{{ $id_invoice_letter->name_customer }}</option>
             @if (count($customer) !== 0)
                 @foreach ($customer as $pelanggans)
@@ -49,13 +48,20 @@
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="dikirim">Tanggal Dikirim</label>
-        <input type="date" class="form-control" id="dikirim" name="dikirim"
-            value="{{ \Carbon\Carbon::parse($id_invoice_letter->created_at)->format('Y-m-d') }}">
+        <input type="date" class="form-control {{ $errors->has('created_at') ? ' is-invalid' : '' }}" id="dikirim"
+            name="created_at" value="{{ \Carbon\Carbon::parse($id_invoice_letter->created_at)->format('Y-m-d') }}">
+        @if ($errors->has('created_at'))
+            <span class="text-danger">{{ $errors->first('created_at') }}</span>
+        @endif
     </div>
     <div class="form-group col-md-6">
         <label for="tempo">Tanggal Jatuh Tempo</label>
-        <input type="date" class="form-control" id="tempo" name="tempo"
+        <input type="date" class="form-control {{ $errors->has('jatuh_tempo_invoice') ? ' is-invalid' : '' }}"
+            id="tempo" name="jatuh_tempo_invoice"
             value="{{ \Carbon\Carbon::parse($id_invoice_letter->jatuh_tempo_invoice)->format('Y-m-d') }}">
+        @if ($errors->has('jatuh_tempo_invoice'))
+            <span class="text-danger">{{ $errors->first('jatuh_tempo_invoice') }}</span>
+        @endif
     </div>
 </div>
 <div class="container-fluid" style="margin:0 !important;padding:0 !important;">
@@ -92,14 +98,17 @@
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="kategori">Standar Pembayaran</label>
-        <select class="form-control" id="kategori" name="sp" value="{{ $term->standar_pembayaran }}">
+        <select class="form-control {{ $errors->has('sp') ? ' is-invalid' : '' }}" id="kategori" name="sp"
+            value="{{ $term->standar_pembayaran }}">
             <option value="">Pilih Standar Pembayaran</option>
             <option value="standar"@if ($term->standar_pembayaran == 'standar') selected @endif>Standar</option>
             <option value="medium"@if ($term->standar_pembayaran == 'medium') selected @endif>Medium</option>
             <option value="high" @if ($term->standar_pembayaran == 'high') selected @endif>High</option>
             <option value="excelent"@if ($term->standar_pembayaran == 'excelent') selected @endif>Excelent</option>
         </select>
-        {{-- <input type="text" class="form-control" id="kategori" placeholder="Perusahaan" name="sp"> --}}
+        @if ($errors->has('sp'))
+            <span class="text-danger">{{ $errors->first('sp') }}</span>
+        @endif
     </div>
     <div class=" col-md-6">
         <div class="row ">
@@ -129,18 +138,20 @@
     <div class="col-md-6">
         <div class="form-group">
             <label for="catatan">Catatan :</label>
-            <textarea class="form-control" name="catatan">{{ $id_invoice_letter->catatan_keterangan }} </textarea>
+            <textarea class="form-control {{ $errors->has('catatan_keterangan') ? ' is-invalid' : '' }}"
+                name="catatan_keterangan">{{ $id_invoice_letter->catatan_keterangan }} </textarea>
+            @if ($errors->has('catatan_keterangan'))
+                <span class="text-danger">{{ $errors->first('catatan_keterangan') }}</span>
+            @endif
         </div>
     </div>
     <div class="col-md-6 mt-2 dd">
-
         <div class="hiddengg">
-
         </div>
         <div class="form-group row">
             <label for="dp" class="col-sm-4 col-form-label">Sub Total</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="subtotal" name="jumlah"
+                <input type="text" class="form-control" id="subtotal" name="pembayaran"
                     value="{{ $id_invoice_letter->pembayaran }}" readonly>
             </div>
         </div>

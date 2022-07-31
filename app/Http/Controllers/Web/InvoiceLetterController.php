@@ -152,16 +152,16 @@ class InvoiceLetterController extends Controller
                 'id_customer' => 'required',
                 'sp' => 'required',
                 'perihal' => 'required',
-                'catatan' => 'required',
-                'dikirim' => 'required|date_format:Y-m-d',
-                'tempo' => 'required|date_format:Y-m-d',
+                'catatan_keterangan' => 'required',
+                'created_at' => 'required|date_format:Y-m-d',
+                'jatuh_tempo_invoice' => 'required|date_format:Y-m-d',
             ],
             [
                 'perihal.required' => 'Isi Input Perihal Ini.',
-                'catatan.required' => 'Tuliskan Catatan Tersebut',
+                'catatan_keterangan.required' => 'Tuliskan Catatan Tersebut',
                 'id_customer.required' => 'Silahkan pilih satu nama customer',
-                'dikirim.required' => 'Isi Tanggal Dikirim',
-                'tempo.required' => 'Isi Tanggal Jatuh Tempo',
+                'created_at.required' => 'Isi Tanggal Dikirim',
+                'jatuh_tempo_invoice.required' => 'Isi Tanggal Jatuh Tempo',
                 'sp.required' => 'Pilih Salah Satu',
             ]
         );
@@ -169,7 +169,6 @@ class InvoiceLetterController extends Controller
             'id_customer' => $request->id_customer,
             'created_at' => date('Y-m-d H:i:s', strtotime($request->created_at . date('H:i:s'))),
             'jatuh_tempo_invoice' => date('Y-m-d H:i:s', strtotime($request->jatuh_tempo_invoice . date('H:i:s'))),
-            'nomor_surat' => $request->nomor_surat,
             'perihal' => $request->perihal,
             'catatan_keterangan' => $request->catatan_keterangan,
             'pembayaran' => $request->pembayaran,
@@ -229,7 +228,7 @@ class InvoiceLetterController extends Controller
                 DB::table('tbl_term')->insert($request5);
             }
         }
-        return redirect()->route('index_InvoiceLetter');
+        return redirect()->route('index_InvoiceLetter')->with('Success', 'Data Telah Diperbaharui');
     }
     public function delete_InvoiceLetter($id_invoice)
     {

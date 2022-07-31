@@ -42,7 +42,6 @@
                     </div>
                     <div class="card">
                         <div class="card-body">
-
                             <form action="{{ route('update_InvoiceLetter', $id_invoice_letter->id_invoice) }}"
                                 method="POST">
                                 @csrf

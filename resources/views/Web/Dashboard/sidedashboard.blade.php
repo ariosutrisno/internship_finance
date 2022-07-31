@@ -36,12 +36,12 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)"
+                    {{-- <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)"
                         id="bell" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span><i data-feather="bell" class="svg-icon"></i></span>
                         <span class="badge badge-primary notify-no rounded-circle">5</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-left mailbox animated bounceInDown">
+                    </a> --}}
+                    {{-- <div class="dropdown-menu dropdown-menu-left mailbox animated bounceInDown">
                         <ul class="list-style-none">
                             <li>
                                 <div class="message-center notifications position-relative">
@@ -104,7 +104,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> --}}
 
                     <!-- ============================================================== -->
                     <!-- User profile and search -->
@@ -119,19 +119,13 @@
                             <i data-feather="chevron-down" class="svg-icon"></i></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                        <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"
+                        <a class="dropdown-item" href="{{ route('view_user') }}"><i data-feather="user"
                                 class="svg-icon mr-2 ml-1"></i>
                             My
                             Profile</a>
-                        <a class="dropdown-item" href="javascript:void(0)"><i data-feather="credit-card"
+                        <a class="dropdown-item" href="{{ route('index_BukuKas') }}"><i data-feather="credit-card"
                                 class="svg-icon mr-2 ml-1"></i>
-                            My Balance</a>
-                        <a class="dropdown-item" href="javascript:void(0)"><i data-feather="mail"
-                                class="svg-icon mr-2 ml-1"></i>
-                            Inbox</a>
-                        <a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings"
-                                class="svg-icon mr-2 ml-1"></i>
-                            Account Setting</a>
+                            My Savings</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
@@ -151,8 +145,8 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link" href="{{ route('index_dashboard') }}"
-                        aria-expanded="false"><i data-feather="home" class="feather-icon text-white"></i><span
+                    <a class="sidebar-link sidebar-link" href="{{ route('index_dashboard') }}" aria-expanded="false"><i
+                            data-feather="home" class="feather-icon text-white"></i><span
                             class="hide-menu">Dashboard</span></a>
                 </li>
                 <!-- Buku Kas -->
@@ -251,7 +245,7 @@
                         </li> --}}
 
                         <li class="sidebar-item">
-                            <a href="{{ url('#') }}" class="sidebar-link"><span class="hide-menu"> Akun
+                            <a href="{{ route('view_user') }}" class="sidebar-link"><span class="hide-menu"> Akun
                                     Saya
                                 </span></a>
                         </li>

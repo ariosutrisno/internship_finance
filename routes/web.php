@@ -115,11 +115,21 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('create/save', 'Web\InvoiceLetterController@save_InvoiceLetter')->name('save_InvoiceLetter');
             Route::get('/{id_invoice}', 'Web\InvoiceLetterController@jquerycreate')->name('invoicejquerycreate');
             Route::get('{id_invoice}/view', 'Web\InvoiceLetterController@view_InvoiceLetter')->name('view_InvoiceLetter');
-            Route::get('{id_invoice}/update', 'Web\InvoiceLetterController@update_InvoiceLetter')->name('update_InvoiceLetter');
+            Route::post('{id_invoice}/update', 'Web\InvoiceLetterController@update_InvoiceLetter')->name('update_InvoiceLetter');
             Route::get('{id_invoice}/delete', 'Web\InvoiceLetterController@delete_InvoiceLetter')->name('delete_InvoiceLetter');
             Route::get('{id_invoice}/print', 'Web\InvoiceLetterController@print_InvoiceLetter')->name('print_InvoiceLetter');
         });
         /* INVOICE LETTER END */
+
         /* ================= LETTER END ================= */
+    });
+    Route::group(['prefix' => 'user'], function () {
+        /* AKUN */
+        Route::prefix('akun')->group(function () {
+            Route::get('/user', 'Web\AkunController@view_user')->name('view_user');
+            Route::get('/{id_user}/edit', 'Web\AkunController@edit_user')->name('edit_user');
+            Route::patch('/{id_user}/update', 'Web\AkunController@update_user')->name('update_user');
+        });
+        /* AKUN END */
     });
 });
