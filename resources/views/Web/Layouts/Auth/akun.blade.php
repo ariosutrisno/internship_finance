@@ -44,14 +44,11 @@
                                                 <button class="btn float-right"><i
                                                         data-feather="file-text"></i></button><br>
                                             </li>
-
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- Akun Saya -->
-
                             <div class="container">
                                 <div class="row">
                                     <div class="card col-lg-12 mt-4">
@@ -81,7 +78,7 @@
                                                                 class="col-sm-5 text-dark col-form-label">Telepon</label>
                                                             <div class="col-sm-7">
                                                                 <input type="text" class="bg-light form-control"
-                                                                    id="Telpon" readonly>
+                                                                    id="Telpon" value="{{ $id->phone_users }}" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
@@ -90,32 +87,12 @@
                                                                 Kelamin</label>
                                                             <div class="col-sm-7">
                                                                 <input type="text" class="bg-light form-control"
-                                                                    id="Kelamin" readonly>
+                                                                    id="Kelamin" value="{{ $id->jk_users }}" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <!-- Form Kanan -->
                                                     <div class="col-md-6">
-                                                        {{-- <div class="form-group row">
-                                                            <label for="password"
-                                                                class="text-dark col-sm-5 col-form-label">Change
-                                                                Password</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="password" class="bg-light form-control"
-                                                                    id="password">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="repassword"
-                                                                class="text-dark col-sm-5 col-form-label">Ulangi
-                                                                Password</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="password" class="bg-light form-control"
-                                                                    id="repassword">
-                                                            </div>
-                                                        </div> --}}
-
-
                                                         <div class="form-group row">
                                                             <label for="company"
                                                                 class="text-dark col-sm-5 col-form-label">Tanggal

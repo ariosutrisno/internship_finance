@@ -18,7 +18,7 @@ class AkunController extends Controller
     {
         $id = $this->Auth();
         return view('Web.Layouts.Auth.akun', compact([
-            'id'
+            'id',
         ]));
     }
     public function edit_user()
@@ -30,14 +30,15 @@ class AkunController extends Controller
     }
     public function update_user(Request $request, $id_user)
     {
-        $request->validate([]);
         DB::table('users')->where('id', '=', $id_user)->update([
-            'name' => $request->nama_lengkap,
-            'jk' => $request->jk_users,
-            'phone_users' => $request->jk,
+            'name' => $request->nama_asli,
+            'jk_users' => $request->jk_users,
+            'phone_users' => $request->telepon,
             'email' => $request->email,
             'password' => Hash::make($request->pwNew),
         ]);
-        return redirect()->route('view_user');
+        return response()->json([
+            'success' => 'Data Telah Diupdate',
+        ]);
     }
 }

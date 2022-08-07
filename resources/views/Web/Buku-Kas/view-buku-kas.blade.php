@@ -332,8 +332,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="keterangan" class="col-form-label">Keterangan :</label>
-                                <textarea class="form-control" id="keterangan1" name="catatan_keterangan"
-                                    value="{{ old('catatan_keterangan') }}"></textarea>
+                                <textarea class="form-control" id="keterangan1" name="catatan_keterangan" value="{{ old('catatan_keterangan') }}"></textarea>
                                 <span style="color: red;font-size:12px" id="keteranganError1"></span>
                             </div>
                             <div class="modal-footer">
@@ -495,7 +494,6 @@
                     }
                 },
                 error: function(error) {
-                    console.log(error)
                     // keterangan
                     if ($('#keterangan').val() == '') {
                         $('#keteranganError').text(error.responseJSON.errors.catatan_keterangan)
