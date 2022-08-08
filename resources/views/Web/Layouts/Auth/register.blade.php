@@ -18,7 +18,6 @@
             <div class="login-form">
                 <form id="register">
                     @csrf
-
                     <div class="form-group row">
                         <label for="nama" class="col-sm-4 col-form-label" value="{{ old('name') }}">Nama</label>
                         <div class=" col-sm-8">
@@ -86,12 +85,12 @@
                 </li>
             </ul>
             <ul class="list-inline text-center" style="font-size:12px">
-                <li class="list-inline-item"><a class="social-icon text-xs-center text-dark" target="_blank"
+                {{-- <li class="list-inline-item"><a class="social-icon text-xs-center text-dark" target="_blank"
                         href="#">Downloads
                         App</a></li>
                 <li class="list-inline-item"><a class="social-icon text-xs-center text-dark" target="_blank"
                         href="#">Downloads
-                        ios</a></li>
+                        ios</a></li> --}}
 
             </ul>
             <p class="text-center" style="font-size:12px">Alan Finance © 2020 PT. Alan
@@ -135,10 +134,9 @@
                                 .then(function() {
                                     window.location.href = "{{ route('index_dashboard') }}";
                                 });
-
                         } else {
                             Swal.fire({
-                                title: '<strong>Login Failed</u></strong>',
+                                title: '<strong>Register Failed</u></strong>',
                                 icon: 'error',
                                 showCloseButton: true,
                                 focusConfirm: false,
