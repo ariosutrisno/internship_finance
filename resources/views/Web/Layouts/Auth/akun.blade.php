@@ -29,8 +29,8 @@
                                         <div class="col-md-8">
                                             <div class="row">
                                                 <div class="col-sm-1 mt-1">
-                                                    <img src="{{ asset('frontend/img/man-1.png') }}" class="rounded-circle"
-                                                        alt="profile">
+                                                    <img src="{{ asset('storage/storage/' . $id->img_users) }}"
+                                                        class="rounded-circle" alt="profile" width="75px" height="75px">
                                                 </div>
 
                                                 <div class="col-sm-10 ml-4">

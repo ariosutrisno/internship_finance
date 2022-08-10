@@ -128,7 +128,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::prefix('akun')->group(function () {
             Route::get('/user', 'Web\AkunController@view_user')->name('view_user');
             Route::get('/{id_user}/edit', 'Web\AkunController@edit_user')->name('edit_user');
-            Route::patch('/{id_user}/update', 'Web\AkunController@update_user')->name('update_user');
+            Route::post('/{id_user}/update', 'Web\AkunController@update_user')->name('update_user');
         });
         /* AKUN END */
     });

@@ -52,8 +52,11 @@
     <script type="text/javascript" src="{{ asset('frontend/css/js/numeral.min.js') }}"></script>
     {{-- new --}}
     @yield('container')
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <link href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" />
+    {{-- <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <link href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" /> --}}
+    <link rel="stylesheet" href="{{ asset('frontend/css/jquery-ui.min.css') }}">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"
+        integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
 </body>
 
 </html>

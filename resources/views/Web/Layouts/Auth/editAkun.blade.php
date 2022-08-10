@@ -23,7 +23,7 @@
                         <!-- Start First Cards -->
                         <!-- *************************************************************** -->
                         <div class="container">
-                            <form id="formUpdate" enctype="multipart/form-data">
+                            <form id="formUpdate" enctype='multipart/form-data'>
                                 @csrf
                                 <div class="card">
                                     <div class="card-body">
@@ -39,11 +39,14 @@
                                                         <img src="{{ asset('frontend/imgNew/pensil.png') }}" width="30px"
                                                             height="30px" alt="pensil"
                                                             style="position: absolute; bottom:0.5px" id="pencil">
-                                                        <input type="file" id="FileUpload1" style="display: none" />
+                                                        <input type="file" id="FileUpload" style="display: none"
+                                                            name="img" />
                                                     </div>
                                                     <div class="col-sm-10 ml-4">
                                                         <span class="h1 text-cyan"><strong> Akun </strong></span>
                                                         <br><span>{{ ucwords($id->name) }}</span>
+                                                        {{-- <br><input type="file" name="newIMG" id="foto1"> --}}
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -160,6 +163,7 @@
                                                                 <button type="button"
                                                                     class="btn btn-outline-success update">Update</button>
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -175,103 +179,40 @@
                         $('.cancel').click(function() {
                             window.location.href = '{{ route('view_user') }}'
                         })
-                        window.onload = function() {
-                            var fileupload = document.getElementById("FileUpload1");
-                            var coverPreview = document.getElementById("profile");
-                            var image = document.getElementById("pencil");
-                            image.onclick = function() {
-                                fileupload.click();
-                            };
-                            fileupload.addEventListener("change", _ => {
-                                let file = fileupload.files[0];
-                                let reader = new FileReader();
-                                reader.onload = function() {
-                                    coverPreview.src = reader.result;
-                                }
-                                reader.readAsDataURL(file);
-                            });
+                        /* UNGGAH FOTO */
+                        var image = document.getElementById("pencil");
+                        var File = document.getElementById("FileUpload");
+                        image.onclick = function() {
+                            File.click()
                         };
+                        File.onchange = evt => {
+                            const [file] = FileUpload.files
+                            if (file) {
+                                profile.src = URL.createObjectURL(file)
+                            }
+                        }
                         /* UPDATE AKUN */
+                        // Open connection
                         $('.update').on('click', function() {
-                            let formUser = $('#formUpdate').serialize()
+                            var form = $('#formUpdate')[0];
+                            var formdata = new FormData(form);
+                            formdata.append('Gambar', 'tes doang')
                             $.ajax({
                                 url: '{{ route('update_user', ['id_user' => $id->id]) }}',
-                                method: 'PATCH',
-                                data: formUser,
+                                method: 'POST',
+                                data: formdata,
+                                dataType: 'json',
+                                contentType: false,
+                                processData: false,
+                                async: false,
+                                headers: {
+                                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                                },
                                 success: function(data) {
-                                    if (data.success) {
-                                        window.location.href = '{{ route('view_user') }}';
-                                        Swal.mixin({
-                                                toast: true,
-                                                position: 'top-end',
-                                                showConfirmButton: false,
-                                                timer: 5000
-                                            })
-                                            .fire({
-                                                type: 'success',
-                                                title: 'Akun Anda berhasil Di Update'
-                                            })
-                                    }
+                                    console.log(data.message)
                                 },
                                 error: function(error) {
-                                    // NAMA LENGKAP
-                                    if ($('#Input_nama_lengkap').val() == '') {
-                                        $('#Input_nama_lengkap').css('border-color', 'red')
-                                        $('#Textnama').text('Nama Tidak Boleh Kosong').css('display', 'block').css(
-                                            'color', 'red')
-                                    } else {
-                                        $('#Input_nama_lengkap').css('border-color', 'green')
-                                        $('#Textnama').text('Data Telah Diisi').css('color', 'green')
-                                    }
-                                    // EMAIL
-                                    if ($('#email').val() == '') {
-                                        $('#email').css('border-color', 'red')
-                                        $('#Textemail').text('Email Tidak Boleh Kosong').css('display', 'block').css(
-                                            'color', 'red')
-                                    } else {
-                                        $('#email').css('border-color', 'green')
-                                        $('#Textemail').text('Data Telah Diisi').css('color', 'green')
-                                    }
-                                    // TELEPON
-                                    if ($('#input_telepon').val() == '') {
-                                        $('#input_telepon').css('border-color', 'red')
-                                        $('#Texttelepon').text('Telepon Tidak Boleh Kosong').css('display', 'block')
-                                            .css(
-                                                'color', 'red')
-                                    } else {
-                                        $('#input_telepon').css('border-color', 'green')
-                                        $('#Texttelepon').text('Data Telah Diisi').css('color', 'green')
-                                    }
-                                    // JENIS KELAMIN
-                                    if ($('#Kelamin').val() == '') {
-                                        $('#Kelamin').css('border-color', 'red')
-                                        $('#Textjk').text('Jenis Kelamin Tidak Boleh Kosong').css('display', 'block')
-                                            .css(
-                                                'color', 'red')
-                                    } else {
-                                        $('#Kelamin').css('border-color', 'green')
-                                        $('#Textjk').text('Data Telah Diisi').css('color', 'green')
-                                    }
-                                    // CHANGE PASSWORD
-                                    if ($('#password').val() == '') {
-                                        $('#password').css('border-color', 'red')
-                                        $('#Textpwchange').text('Password Tidak Boleh Kosong').css('display', 'block')
-                                            .css(
-                                                'color', 'red')
-                                    } else {
-                                        $('#password').css('border-color', 'green')
-                                        $('#Textpwchange').text('Data Telah Diisi').css('color', 'green')
-                                    }
-                                    // ULANGI PASSWORD
-                                    if ($('#repassword').val() == '') {
-                                        $('#repassword').css('border-color', 'red')
-                                        $('#TextpwConfirm').text('Password Confirm Tidak Boleh Kosong').css('display',
-                                            'block').css(
-                                            'color', 'red')
-                                    } else {
-                                        $('#repassword').css('border-color', 'green')
-                                        $('#TextpwConfirm').text('Data Telah Diisi').css('color', 'green')
-                                    }
+                                    console.log(error)
                                 }
                             })
                         })

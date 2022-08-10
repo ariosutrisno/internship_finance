@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AkunController extends Controller
 {
+
     function Auth()
     {
         return Auth::user();
@@ -30,15 +32,30 @@ class AkunController extends Controller
     }
     public function update_user(Request $request, $id_user)
     {
+
+        // if (!$request->all()) {
+        //     # code...
+        //     return response()->json([
+        //         'message' => 'gagal'
+        //     ]);
+        // } else {
+        //     return response()->json([
+        //         'message' => $request->all()
+        //     ]);
+        // }
+
+        // // dd($request->all());
+
+        $fileName = $request->file('img')->getClientOriginalName();
+        Storage::putFileAs('public/storage', $request->file('img'), $fileName);
         DB::table('users')->where('id', '=', $id_user)->update([
             'name' => $request->nama_asli,
             'jk_users' => $request->jk_users,
             'phone_users' => $request->telepon,
             'email' => $request->email,
             'password' => Hash::make($request->pwNew),
+            'img_users' => $fileName,
         ]);
-        return response()->json([
-            'success' => 'Data Telah Diupdate',
-        ]);
+        return response()->json(['success' => true]);
     }
 }

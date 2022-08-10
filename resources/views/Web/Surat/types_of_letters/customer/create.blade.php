@@ -42,7 +42,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <form action="{{ route('save_Customer') }}" method="POST">
+                            <form action="{{ route('save_Customer') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
