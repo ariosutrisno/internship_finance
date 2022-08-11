@@ -15,6 +15,7 @@ class DashboardController extends Controller
     }
     public function index_dashboard()
     {
+        $id = Auth::user();
         // ALL CASH BOOK
         $all_cash_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->auth())->get();
         // ALL CASH BOOK END
@@ -161,7 +162,8 @@ class DashboardController extends Controller
             'data_persen_expenditure',
             'bulangrafik',
             'pemasukangrafik',
-            'pengeluarangrafik'
+            'pengeluarangrafik',
+            'id'
         ));
     }
     public function show_dashboard($id_kas)

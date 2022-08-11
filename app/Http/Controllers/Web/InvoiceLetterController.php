@@ -16,13 +16,16 @@ class InvoiceLetterController extends Controller
     }
     public function index_InvoiceLetter()
     {
+        $id = Auth::user();
         $all_request_invoice = DB::table('tbl_invoice')->where('id_users', '=', $this->auth())->orderByDesc('created_at')->paginate('10');
         return view('Web.Surat.types_of_letters.invoice.index', compact([
             'all_request_invoice',
+            'id'
         ]));
     }
     public function create_InvoiceLetter()
     {
+        $id = Auth::user();
         $bulan_romawi = array('', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII');
         $Awal = 'ALAN-C';
         $noUrutAkhir = DB::table('tbl_invoice')->where('id_users', '=', $this->auth())->max('nomor_surat');
@@ -33,7 +36,8 @@ class InvoiceLetterController extends Controller
         $customer = DB::table('tbl_customer')->get();
         return view('Web.Surat.types_of_letters.invoice.create', compact([
             'nomor_surat',
-            'customer'
+            'customer',
+            'id'
         ]));
     }
     public function save_InvoiceLetter(Request $request)

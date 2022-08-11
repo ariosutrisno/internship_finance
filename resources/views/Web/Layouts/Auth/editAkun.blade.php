@@ -31,9 +31,15 @@
                                             <div class="col-md-8">
                                                 <div class="row">
                                                     <div class="col-sm-1 mt-1" style="z-index:1">
-                                                        <img src="{{ asset('frontend/img/man-1.png') }}" width="75px"
-                                                            height="75px" class="rounded-circle" alt="profile"
-                                                            id="profile">
+                                                        @if (!$id->img_users)
+                                                            <img src="{{ asset('frontend/imgNew/blank_profile.png') }}"
+                                                                alt="user" class="rounded-circle" width="75px"
+                                                                id="profile" height="75px" />
+                                                        @else
+                                                            <img src="{{ asset('storage/storage/' . $id->img_users) }}"
+                                                                class="rounded-circle" alt="profile" width="75px"
+                                                                id="profile" height="75px">
+                                                        @endif
                                                     </div>
                                                     <div style="z-index:2">
                                                         <img src="{{ asset('frontend/imgNew/pensil.png') }}" width="30px"
@@ -196,7 +202,6 @@
                         $('.update').on('click', function() {
                             var form = $('#formUpdate')[0];
                             var formdata = new FormData(form);
-                            formdata.append('Gambar', 'tes doang')
                             $.ajax({
                                 url: '{{ route('update_user', ['id_user' => $id->id]) }}',
                                 method: 'POST',
@@ -209,10 +214,22 @@
                                     'X-CSRF-TOKEN': "{{ csrf_token() }}",
                                 },
                                 success: function(data) {
-                                    console.log(data.message)
+                                    if (data.success) {
+                                        window.location.href = '{{ route('view_user') }}';
+                                        Swal.mixin({
+                                                toast: true,
+                                                position: 'top-end',
+                                                showConfirmButton: false,
+                                                timer: 5000
+                                            })
+                                            .fire({
+                                                type: 'success',
+                                                title: 'Akun Anda berhasil Di Update'
+                                            })
+                                    }
                                 },
                                 error: function(error) {
-                                    console.log(error)
+                                    toastr.error('Tolong Periksa Kembali Akun anda atau referesh halaman tersebut')
                                 }
                             })
                         })

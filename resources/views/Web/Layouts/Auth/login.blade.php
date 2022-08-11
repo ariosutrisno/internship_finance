@@ -45,6 +45,10 @@
         <p class="text-center " style="padding-top: 80px;">Don't have an account? <a href="{{ url('/register') }}"
                 class="font-weight-bold">Free
                 Register</a></p>
+        @if (Route::has('password.request'))
+            <p class="text-center " style="padding-top: 10px;">Forget Password? <a href="{{ route('password.request') }}"
+                    class="font-weight-bold">Forget Password</a></p>
+        @endif
 
         <div class=" justify-content-center" style="bottom:0 ;margin-top:120px">
             <ul class="list-inline text-center text-dark" style="font-size:12px">

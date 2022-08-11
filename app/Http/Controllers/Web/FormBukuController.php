@@ -11,7 +11,10 @@ class FormBukuController extends Controller
 {
     public function create_BukuKas()
     {
-        return view('Web.Buku-Kas.Form-Buku-Kas');
+        $id = Auth::user();
+        return view('Web.Buku-Kas.Form-Buku-Kas', compact([
+            'id'
+        ]));
     }
     public function save_BukuKas(Request $request)
     {

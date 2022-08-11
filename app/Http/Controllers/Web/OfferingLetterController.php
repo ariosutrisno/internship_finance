@@ -17,14 +17,16 @@ class OfferingLetterController extends Controller
     }
     public function index_OfferingLetter()
     {
-
+        $id = Auth::user();
         $index_offering = DB::table('tbl_offering_letter')->where('id_users', '=', $this->Auth())->orderByDesc('created_at')->paginate(10);
         return view('Web.Surat.types_of_letters.offering.index', compact([
-            'index_offering'
+            'index_offering',
+            'id',
         ]));
     }
     public function create_OfferingLetter()
     {
+        $id = Auth::user();
         $bulan_romawi = array('', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII');
         $letter = 'MAGANG';
         $Awal = 'ALAN-MI';
@@ -34,7 +36,8 @@ class OfferingLetterController extends Controller
             $nomor_surat;
         }
         return view('Web.Surat.types_of_letters.offering.create', compact([
-            'nomor_surat'
+            'nomor_surat',
+            'id'
         ]));
     }
 

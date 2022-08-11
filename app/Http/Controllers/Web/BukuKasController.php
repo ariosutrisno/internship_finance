@@ -16,13 +16,16 @@ class BukuKasController extends Controller
     }
     public function index_BukuKas()
     {
+        $id = Auth::user();
         $all_cash_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->auth())->orderByDesc('created_at')->get();
         return view('Web.Buku-Kas.index-buku-kas', compact(
-            'all_cash_book'
+            'all_cash_book',
+            'id'
         ));
     }
     public function show_BukuKas(Request $request, $id_kas)
     {
+        $id = Auth::user();
         $cash_book_id = DB::table('tbl_buku_kas')->where('id_users', '=', $this->auth())->where('id_kas', '=', $id_kas)->first();
         $cash_book_id_total = DB::table('tbl_buku_kas')->where('id_users', '=', $this->auth())->where('id_kas', '=', $id_kas)->sum('saldo_buku_akhir');
         $noted_cash_book_id = DB::table('tbl_catatan_buku')->where('id_users', '=', $this->auth())->where('id_buku_kas', '=', $id_kas)
@@ -37,6 +40,7 @@ class BukuKasController extends Controller
             'noted_cash_book_id',
             'kategori',
             'cash_book_id_total',
+            'id'
         ));
     }
     public function save_Noted_BukuKas(Request $request, $id_kas)

@@ -15,6 +15,7 @@ class AccountsReceivableController extends Controller
     }
     public function index_AccountsReceivable()
     {
+        $id = Auth::user();
         $all_AccountsReceivable = DB::table('tbl_piutang')->where('id_users', '=', $this->Auth())->orderByDesc('created_at')->paginate(10);
         $cash_AccountsReceivable = DB::table('tbl_piutang')->where('id_users', '=', $this->Auth())->sum('catatan_saldo_piutang');
         $all_category = DB::table('tbl_kategori')->get();
@@ -23,7 +24,8 @@ class AccountsReceivableController extends Controller
             'all_AccountsReceivable',
             'cash_AccountsReceivable',
             'all_category',
-            'all_cash_book'
+            'all_cash_book',
+            'id'
         ]));
     }
     public function save_AccountsReceivable(Request $request)

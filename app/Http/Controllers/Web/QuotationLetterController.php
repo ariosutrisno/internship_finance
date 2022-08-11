@@ -16,13 +16,16 @@ class QuotationLetterController extends Controller
     }
     public function index_QuotationLetter()
     {
+        $id = Auth::user();
         $all_data_quotation = DB::table('tbl_quotation_letter')->where('id_users', '=', $this->auth())->orderByDesc('created_at')->paginate(10);
         return view('Web.Surat.types_of_letters.quotation.index', compact([
             'all_data_quotation',
+            'id'
         ]));
     }
     public function create_QuotationLetter()
     {
+        $id = Auth::user();
         $bulan_romawi = array('', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII');
         $Awal = 'ALAN-C';
         $noUrutAkhir = DB::table('tbl_quotation_letter')->where('id_users', '=', $this->auth())->max('nomor_surat');
@@ -33,7 +36,8 @@ class QuotationLetterController extends Controller
         $customer = DB::table('tbl_customer')->get();
         return view('Web.Surat.types_of_letters.quotation.create', compact([
             'nomor_surat',
-            'customer'
+            'customer',
+            'id'
         ]));
     }
     public function save_QuotationLetter(Request $request)

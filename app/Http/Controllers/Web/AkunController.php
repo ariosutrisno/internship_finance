@@ -32,30 +32,19 @@ class AkunController extends Controller
     }
     public function update_user(Request $request, $id_user)
     {
-
-        // if (!$request->all()) {
-        //     # code...
-        //     return response()->json([
-        //         'message' => 'gagal'
-        //     ]);
-        // } else {
-        //     return response()->json([
-        //         'message' => $request->all()
-        //     ]);
-        // }
-
-        // // dd($request->all());
-
         $fileName = $request->file('img')->getClientOriginalName();
-        Storage::putFileAs('public/storage', $request->file('img'), $fileName);
-        DB::table('users')->where('id', '=', $id_user)->update([
-            'name' => $request->nama_asli,
-            'jk_users' => $request->jk_users,
-            'phone_users' => $request->telepon,
-            'email' => $request->email,
-            'password' => Hash::make($request->pwNew),
-            'img_users' => $fileName,
-        ]);
+        if ($request->has('img')) {
+            # code...
+            Storage::putFileAs('public/storage', $request->file('img'), $fileName);
+            DB::table('users')->where('id', '=', $id_user)->update([
+                'name' => $request->nama_asli,
+                'jk_users' => $request->jk_users,
+                'phone_users' => $request->telepon,
+                'email' => $request->email,
+                'password' => Hash::make($request->pwNew),
+                'img_users' => $fileName,
+            ]);
+        }
         return response()->json(['success' => true]);
     }
 }

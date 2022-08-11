@@ -14,6 +14,7 @@ class LetterController extends Controller
     }
     public function index_Letter()
     {
-        return view('Web.Surat.index');
+        $id = Auth::user();
+        return view('Web.Surat.index', compact(['id']));
     }
 }

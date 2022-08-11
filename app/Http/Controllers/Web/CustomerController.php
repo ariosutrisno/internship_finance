@@ -15,16 +15,20 @@ class CustomerController extends Controller
     }
     public function index_Customer()
     {
+        $id = Auth::user();
         $customer_index = DB::table('tbl_customer')->where('id_users', '=', $this->Auth())->orderByDesc('created_at')->paginate(10);
         return view('Web.Surat.types_of_letters.customer.index', compact([
-            'customer_index'
+            'customer_index',
+            'id'
         ]));
     }
     public function create_Customer()
     {
+        $id = Auth::user();
         $customer_index = DB::table('tbl_customer')->where('id_users', '=', $this->Auth())->paginate(10);
         return view('Web.Surat.types_of_letters.customer.create', compact([
-            'customer_index'
+            'customer_index',
+            'id'
         ]));
     }
     public function save_Customer(Request $request)

@@ -18,6 +18,7 @@ class CashStatementController extends Controller
 
     public function daily_CashStatement()
     {
+        $id = Auth::user();
         /* ALL BOOK */
         $all_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->get();
         /* STATISTIC MONTHLY CASH STATMENT */
@@ -46,12 +47,14 @@ class CashStatementController extends Controller
             'all_noted_daily_CashStatement',
             'income',
             'expenditure',
-            'all_date'
+            'all_date',
+            'id'
         ]));
     }
 
     public function weekly_CashStatement()
     {
+        $id = Auth::user();
         /* ALL BOOK */
         $all_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->get();
         /* ALL BOOK END */
@@ -78,11 +81,13 @@ class CashStatementController extends Controller
             'all_noted_weekly_CashStatement',
             'weekly',
             'weekly_income',
-            'weekly_expenditure'
+            'weekly_expenditure',
+            'id'
         ]));
     }
     public function monthly_CashStatement()
     {
+        $id = Auth::user();
         /* ALL BOOK */
         $all_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->get();
         /* STATISTIC MONTHLY CASH STATMENT */
@@ -107,11 +112,13 @@ class CashStatementController extends Controller
             'all_noted_monthly_CashStatement',
             'month_income',
             'month_expenditure',
-            'all_month'
+            'all_month',
+            'id'
         ]));
     }
     public function annual_CashStatement()
     {
+        $id = Auth::user();
         /* ALL BOOK */
         $all_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->get();
         /* ALL BOOK END */
@@ -139,12 +146,14 @@ class CashStatementController extends Controller
             'all_noted_annual_CashStatement',
             'annual_income',
             'annual_expenditure',
-            'annual'
+            'annual',
+            'id'
         ]));
     }
     /* STATEMENT ID BOOK */
     public function dailyID_CashStatement($id_kas)
     {
+        $id = Auth::user();
         /* ALL BOOK */
         $all_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->get();
         /* ALL BOOK END */
@@ -181,11 +190,13 @@ class CashStatementController extends Controller
             'all_noted_daily_CashStatement',
             'income',
             'expenditure',
-            'all_date'
+            'all_date',
+            'id'
         ]));
     }
     public function weeklyID_CashStatement($id_kas)
     {
+        $id = Auth::user();
         /* ALL BOOK */
         $all_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->get();
         $name_cash_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->where('id_kas', '=', $id_kas)->first();
@@ -214,11 +225,13 @@ class CashStatementController extends Controller
             'name_cash_book',
             'weekly',
             'weekly_income',
-            'weekly_expenditure'
+            'weekly_expenditure',
+            'id'
         ]));
     }
     public function monthlyID_CashStatement($id_kas)
     {
+        $id = Auth::user();
         /* ALL BOOK */
         $all_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->where('id_kas', '=', $id_kas);
         $name_cash_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->where('id_kas', '=', $id_kas)->first();
@@ -244,11 +257,13 @@ class CashStatementController extends Controller
         return view('Web.Laporan-Kas.ID_lapora_kas.monthly', compact([
             'all_book',
             'all_noted_monthlyID_CashStatement',
+            'id'
 
         ]));
     }
     public function annualID_CashStatement($id_kas)
     {
+        $id = Auth::user();
         /* ALL BOOK */
         $all_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->get();
         $name_cash_book = DB::table('tbl_buku_kas')->where('id_users', '=', $this->Auth())->where('id_kas', '=', $id_kas)->first();
@@ -277,7 +292,8 @@ class CashStatementController extends Controller
             'annual',
             'annual_income',
             'annual_expenditure',
-            'name_cash_book'
+            'name_cash_book',
+            'id'
         ]));
     }
 }

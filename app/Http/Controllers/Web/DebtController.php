@@ -15,6 +15,7 @@ class DebtController extends Controller
     }
     public function index_Debt()
     {
+        $id = Auth::user();
         $all_debt = DB::table('tbl_hutang')->where('id_users', '=', $this->Auth())
             ->orderByDesc('created_at')
             ->paginate(10);
@@ -25,7 +26,8 @@ class DebtController extends Controller
             'all_debt',
             'all_cash_book',
             'result_total_debt',
-            'all_category'
+            'all_category',
+            'id'
         ]));
     }
     public function save_Debt(Request $request)

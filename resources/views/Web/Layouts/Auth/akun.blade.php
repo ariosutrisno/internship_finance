@@ -29,8 +29,15 @@
                                         <div class="col-md-8">
                                             <div class="row">
                                                 <div class="col-sm-1 mt-1">
-                                                    <img src="{{ asset('storage/storage/' . $id->img_users) }}"
-                                                        class="rounded-circle" alt="profile" width="75px" height="75px">
+                                                    @if (!$id->img_users)
+                                                        <img src="{{ asset('frontend/imgNew/blank_profile.png') }}"
+                                                            alt="user" class="rounded-circle" width="75px"
+                                                            height="75px" />
+                                                    @else
+                                                        <img src="{{ asset('storage/storage/' . $id->img_users) }}"
+                                                            class="rounded-circle" alt="profile" width="75px"
+                                                            height="75px">
+                                                    @endif
                                                 </div>
 
                                                 <div class="col-sm-10 ml-4">
